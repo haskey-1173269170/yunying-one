@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>运营商后台管理系统</title>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-table/bootstrap-table.css">
+    <script src="../plugins/bootstrap/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/adminLTE/js/app.min.js"></script>
+    <script type="text/javascript">
+        function SetIFrameHeight() {
+            var iframeid = document.getElementById("iframe"); //iframe id
+            if (document.getElementById) {
+                iframeid.height = document.documentElement.clientHeight;
+            }
+        }
+    </script>
+</head>
+<body class="hold-transition skin-green sidebar-mini">
+<div class="wrapper">
+    <!-- 页面头部 -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>六脉商城</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>六脉商城-运营中心</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+        </nav>
+    </header>
+    <!-- 页面头部 /-->
+
+    <!-- 导航侧栏 -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">菜单</li>
+                <li id="admin-index"><a href="index.html"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+
+                <!-- 菜单 -->
+                <li class="treeview" shiro:hasPermission="trade:manger">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>商品管理</span>
+                        <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li>
+                            <a href="seller_1.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>商品展示
+                            </a>
+                        </li>
+                        <li>
+                            <a href="seller.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>商品类型
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview" shiro:hasPermission="trade:manger">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>交易管理</span>
+                        <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li>
+                            <a href="brand.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>订单管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="specification.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>评价
+                            </a>
+                        </li>
+                        <li>
+                            <a href="type_template.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>售后
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="treeview" shiro:hasPermission="finance:manger">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>财务管理</span>
+                        <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li>
+                            <a href="content_category.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>财务总览
+                            </a>
+                        </li>
+                        <li>
+                            <a href="content.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>收入提现
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview" shiro:hasPermission="data:manger">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>数据分析</span>
+                        <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li>
+                            <a href="content_category.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>流量分析
+                            </a>
+                        </li>
+                        <li>
+                            <a href="content.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>客户分析
+                            </a>
+                        </li>
+                        <li>
+                            <a href="content.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>商品分析
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview" shiro:hasPermission="setting:userManger">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>系统设置</span>
+                        <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="../querywebuser" target="iframe">
+                                <i class="fa fa-circle-o"></i>用户管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../toqueryRole" target="iframe">
+                                <i class="fa fa-circle-o"></i>角色管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../toupdateUser" target="iframe">
+                                <i class="fa fa-circle-o"></i>个人资料
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- 菜单 /-->
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- 导航侧栏 /-->
+
+    <!-- 内容区域 -->
+    <div class="content-wrapper">
+        <iframe width="100%" id="iframe" name="iframe" onload="SetIFrameHeight()"
+                frameborder="0" src=""></iframe>
+
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.8
+        </div>
+        <strong>Copyright &copy; 2014-2017 <a href="http://www.itcast.cn">研究院研发部</a>.</strong> All rights reserved.
+    </footer>
+
+</div>
+
+</body>
+
+</html>

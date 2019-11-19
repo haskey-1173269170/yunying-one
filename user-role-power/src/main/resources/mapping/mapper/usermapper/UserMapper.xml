@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.user.mapper.UserMapper">
+    <select id="queryWebUserCount" resultType="int" parameterType="com.jk.user.model.WebUser">
+        select count(*) from web_user
+        <include refid="queryUserterm"></include>
+    </select>
+    <sql id="queryUserterm">
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="userSex!=null">
+                and userSex = #{userSex}
+            </if>
+            <if test="startDate!=null">
+                and createDate &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null">
+                and createDate &lt;= #{endDate}
+            </if>
+        </where>
+    </sql>
+    <select id="queryWebUser" resultType="com.jk.user.model.WebUser">
+        select wu.*,a1.full_name area,r.name rname from web_user wu
+        LEFT JOIN xx_area a1 ON wu.userArea = a1.id
+        LEFT JOIN t_webuser_role wr ON wu.userId = wr.webuserid
+        LEFT JOIN t_role r ON wr.roleId = r.id
+        <include refid="queryUserterm2"></include>
+        limit #{s},#{r}
+    </select>
+    <sql id="queryUserterm2">
+        <where>
+            <if test="w.name!=null and w.name!=''">
+                and wu.name like '%${w.name}%'
+            </if>
+            <if test="w.userSex!=null">
+                and wu.userSex = #{w.userSex}
+            </if>
+            <if test="w.startDate!=null">
+                and wu.createDate &gt;=#{w.startDate}
+            </if>
+            <if test="w.endDate!=null">
+                and wu.createDate &lt;= #{w.endDate}
+            </if>
+        </where>
+    </sql>
+    <delete id="deleteWebUserById">
+        delete from web_user where userId in (${id})
+    </delete>
+    <select id="queryRoleIdByUserId" resultType="int" parameterType="int">
+        select wr.roleId from t_webuser_role wr where wr.webuserid = #{id}
+    </select>
+    <delete id="deleteWebUserRoleByUserId" parameterType="int">
+        delete from t_webuser_role where webuserid = #{id}
+    </delete>
+    <insert id="addWebUserRole">
+        insert into t_webuser_role(webuserid,roleId) value (#{userId},#{roleId})
+    </insert>
+    <select id="queryWebUserByName" resultType="com.jk.user.model.WebUser" parameterType="string">
+        select * from web_user where userName = #{value}
+    </select>
+    <select id="queryidentByUserId" resultType="java.lang.String" parameterType="int">
+        SELECT p.ident from t_webuser_role wr
+        LEFT JOIN t_role r ON wr.roleId = r.id
+        LEFT JOIN t_role_power rp ON rp.roleId = r.id
+        LEFT JOIN t_power p ON rp.powerId=p.id
+        where wr.webuserid=#{value} and p.id is not null
+    </select>
+
+    <!--<select id="queryUser" resultType="com.jk.model.User">
+      SELECT
+          u.*,
+          GROUP_CONCAT(r.rname SEPARATOR'-') as rname
+      FROM
+          t_user u
+      LEFT JOIN t_user_role ur ON u.userId = ur.user_id
+      LEFT JOIN t_role r ON ur.role_id = r.rid GROUP BY u.userId
+      limit #{s},#{r}
+    </select>
+    <select id="queryCount" resultType="int">
+          select count(*) FROM(
+          SELECT
+              COUNT(*)
+          FROM
+              t_user u
+          LEFT JOIN t_user_role ur ON u.userId = ur.user_id
+          LEFT JOIN t_role r ON ur.role_id = r.rid GROUP BY u.userId) a
+    </select>
+      <delete id="deleteUserById">
+          delete from t_user where userId in (#{id})
+      </delete>
+      <insert id="addUser" parameterType="com.jk.model.User" keyProperty="userId" useGeneratedKeys="true">
+          INSERT INTO t_user  (
+              userName,
+              userPwd,
+              userSex,
+              userDate,
+              userImg,
+              phone
+          )
+          VALUES
+              (#{userName},#{userPwd},#{userSex},#{userDate},#{userImg},#{phone})
+      </insert>
+      <insert id="addUserRole" parameterType="com.jk.model.User" >
+          insert into t_user_role(user_id,role_id) values
+          <foreach collection="ids" item="a" separator=",">
+              (#{id},#{a})
+          </foreach>
+      </insert>
+      <delete id="deleteUserRoleByUserId">
+          delete from t_user_role where user_id in (#{id})
+      </delete>
+      <select id="queryUserByUserName" resultType="com.jk.model.User" parameterType="com.jk.model.User">
+          select * from t_user where userName = #{userName}
+      </select>-->
+</mapper>
