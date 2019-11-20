@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
 </head>
 <body>
-<form class="form-horizontal" id="saveUserformid">
+<form class="form-horizontal" id="saveUserformid" style="margin-top: 10px">
     <input type="hidden" name="id">
     <div class="form-group">
         <label for="account" class="col-sm-2 control-label">姓名</label>
@@ -48,13 +48,42 @@
             <input type="text" id="birthday" class="form-control date"  name="birthday" placeholder="yyyy-MM-dd">
         </div>
     </div>
-    .3
     <div class="form-group">
-        <label for="deptId2" class="col-sm-2 control-label">部门</label>
-        <div class="col-sm-3">
-            <select id="deptId2" name="deptid" class="form-control"></select>
+        <label for="area1" class="col-sm-2 control-label">地区</label>
+        <div class="radio-inline">
+            <label>
+            <select id="area1" name="deptid" class="form-control" onchange="setArea(2,this.value)"></select>
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label>
+            <select class="form-control" id="area2"  onchange="setArea(3,this.value)"></select>
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label>
+            <select class="form-control" id="area3"></select>
+            </label>
         </div>
     </div>
 </form>
+<script>
+    $(function () {
+        setArea(1);
+    })
+    function setArea(flag,pid) {
+        $.ajax({
+            url:"../user/querArea",
+            data:{'pid':pid},
+            success:function (data) {
+                var op = "<option value='0'>请选择"
+                for (var i =0;i<data.length;i++){
+                    op+="<option value='"+data[i].id+"'>"+data[i].name
+                }
+                $("#area"+flag).html(op)
+            }
+        })
+    }
+</script>
 </body>
 </html>

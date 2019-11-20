@@ -39,4 +39,8 @@ public class toPage {
     public String toupdateUser() {
         return "user/updateUser";
     }
+    @RequestMapping("show")
+    public String show() {
+        return "shouw";
+    }
 }

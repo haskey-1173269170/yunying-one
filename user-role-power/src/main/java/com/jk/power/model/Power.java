@@ -13,19 +13,12 @@ import java.util.List;
 public class Power implements Serializable {
     private static final long serialVersionUID = -2756403093775272194L;
     private Integer id;
-
     private String text;
-
-    private String url;
-
+    private String href;
     private Integer pid;
-
-    private String state;
-
-    private String checked;
-
-    private List<Power> children;
-
+    private Boolean leaf;
+    private Boolean selectable;
+    private List<Power> nodes;
     private String ident;
 
     public String getIdent() {
@@ -52,14 +45,6 @@ public class Power implements Serializable {
         this.text = text;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public Integer getPid() {
         return pid;
     }
@@ -68,27 +53,35 @@ public class Power implements Serializable {
         this.pid = pid;
     }
 
-    public String getState() {
-        return state;
+    public String getHref() {
+        return href;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setHref(String href) {
+        this.href = href;
     }
 
-    public String getChecked() {
-        return checked;
+    public Boolean getLeaf() {
+        return leaf;
     }
 
-    public void setChecked(String checked) {
-        this.checked = checked;
+    public void setLeaf(Boolean leaf) {
+        this.leaf = leaf;
     }
 
-    public List<Power> getChildren() {
-        return children;
+    public Boolean getSelectable() {
+        return selectable;
     }
 
-    public void setChildren(List<Power> children) {
-        this.children = children;
+    public void setSelectable(Boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    public List<Power> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Power> nodes) {
+        this.nodes = nodes;
     }
 }

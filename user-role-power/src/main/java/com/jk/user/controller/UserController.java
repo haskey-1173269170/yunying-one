@@ -47,4 +47,9 @@ public class UserController {
     public void updateroleidbyuserid(Integer userId, Integer roleId) {
         userService.updateroleidbyuserid(userId, roleId);
     }
+    @RequestMapping("querArea")
+    @ResponseBody
+    public List<Map<String,Object>> querArea(Integer pid){
+        return userService.querArea(pid);
+    }
 }

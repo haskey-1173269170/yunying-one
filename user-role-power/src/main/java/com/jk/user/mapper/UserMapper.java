@@ -4,6 +4,7 @@ import com.jk.user.model.WebUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName UserMapper
@@ -28,4 +29,6 @@ public interface UserMapper {
     WebUser queryWebUserByName(String username);
 
     List<String> queryidentByUserId(Integer userid);
+
+    List<Map<String, Object>> querArea(Integer pid);
 }

@@ -60,4 +60,10 @@ public class UserServiceImpl implements UserService {
     public List<String> queryidentByUserId(Integer userid) {
         return userMapper.queryidentByUserId(userid);
     }
+
+    @Override
+    public List<Map<String, Object>> querArea(Integer pid) {
+        List<Map<String, Object>> mapList =  userMapper.querArea(pid);
+        return mapList;
+    }
 }

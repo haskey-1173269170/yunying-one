@@ -40,4 +40,6 @@ public interface UserService {
     WebUser queryWebUserByName(String username);
 
     List<String> queryidentByUserId(Integer userid);
+
+    List<Map<String, Object>> querArea(Integer pid);
 }

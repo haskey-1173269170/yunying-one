@@ -30,14 +30,17 @@ public class PowerServiceImpl implements PowerService {
     public List<Power> queryAllPower() {
         return powerMapper.queryAllPower();
     }
-
     private List<Power> queryNodes(Integer pid) {
         List<Power> list = powerMapper.queryPower(pid);
         for (Power power : list) {
             List<Power> nodeList = powerMapper.queryPower(power.getId());
-            if (nodeList.size() > 0) {
-                power.setChildren(nodeList);
-                power.setState("closed");
+            if (nodeList!=null && nodeList.size()>0) {
+                power.setNodes(nodeList);
+                power.setLeaf(false);
+                power.setSelectable(false);
+            }else {
+                power.setLeaf(true);
+                power.setSelectable(true);
             }
         }
         return list;

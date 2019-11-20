@@ -67,6 +67,17 @@
         LEFT JOIN t_power p ON rp.powerId=p.id
         where wr.webuserid=#{value} and p.id is not null
     </select>
+    <select id="querArea" resultType="java.util.Map" parameterType="int">
+        select a.id as id,a.name as name from xx_area a where parent
+        <if test="value==null">
+           is null
+        </if>
+        <if test="value!=null">
+           = #{value}
+        </if>
+
+    </select>
+
 
     <!--<select id="queryUser" resultType="com.jk.model.User">
       SELECT

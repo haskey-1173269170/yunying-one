@@ -18,9 +18,12 @@
     <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
     <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <script src="../plugins/adminLTE/js/app.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../plugins/adminLTE/js/app.min.js"></script>
+
+    <script src="../plugins/bootstrap/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-treeview/bootstrap-treeview.min.css">
     <script type="text/javascript">
         function SetIFrameHeight() {
             var iframeid = document.getElementById("iframe"); //iframe id
@@ -55,13 +58,12 @@
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">菜单</li>
                 <li id="admin-index"><a href="index.html"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
 
-                <!-- 菜单 -->
+                &lt;!&ndash; 菜单 &ndash;&gt;
                 <li class="treeview" shiro:hasPermission="trade:manger">
                     <a href="#">
                         <i class="fa fa-folder"></i>
@@ -187,7 +189,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- 菜单 /-->
+                &lt;!&ndash; 菜单 /&ndash;&gt;
 
             </ul>
         </section>
@@ -209,7 +211,36 @@
     </footer>
 
 </div>
-
+<script type="text/javascript">
+    $(function(){
+        initTree();
+    })
+    function initTree(){
+        $.ajax({
+            url:"../power/initPower",
+            type:"post",
+            success:function(data){
+                $('#myTree2').treeview({
+                    data:data,
+                    highlightSelected:true,
+                    color: "#428bca",
+                    onNodeSelected:function(event, node) {
+                        alert(123)
+                       /* location.href=node.href*/
+                       // $("#iframe").prop("src",node.href)
+                        //windows.open(node.href,"#iframe","窗口外观设定");
+                      /* $.addtabs({iframeHeight: 550});
+                        $.addtabs.add({
+                            id:node.id,
+                            title:node.text,
+                            url:node.href,
+                        });*/
+                    }
+                })
+            }
+        })
+    }
+</script>
 </body>
 
 </html>
