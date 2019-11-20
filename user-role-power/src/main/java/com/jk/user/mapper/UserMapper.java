@@ -31,4 +31,14 @@ public interface UserMapper {
     List<String> queryidentByUserId(Integer userid);
 
     List<Map<String, Object>> querArea(Integer pid);
+
+    WebUser queryUserById(Integer userid);
+
+    void updateWebUser(WebUser webUser);
+
+    String queryPwdById(Integer userid);
+
+    void updatePwd(@Param("id") Integer userid, @Param("pwd") String newpwd);
+
+    void addWebUser(WebUser webUser);
 }

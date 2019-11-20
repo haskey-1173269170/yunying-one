@@ -3,6 +3,7 @@ package com.jk.user.service;
 
 import com.jk.user.model.WebUser;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -42,4 +43,12 @@ public interface UserService {
     List<String> queryidentByUserId(Integer userid);
 
     List<Map<String, Object>> querArea(Integer pid);
+
+    WebUser queryUserById(Integer userid);
+
+    void updateWebUser(WebUser webUser);
+
+    String updatePwd(String oldpwd, String newpwd, HttpServletRequest request);
+
+    void addWebUser(WebUser webUser);
 }

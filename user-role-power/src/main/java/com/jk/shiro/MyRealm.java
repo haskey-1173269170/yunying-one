@@ -45,7 +45,6 @@ public class MyRealm extends AuthorizingRealm {
         WebUser webUser = (WebUser) principals.getPrimaryPrincipal();
         List<String> stringList = userService.queryidentByUserId(webUser.getUserid());
         for (String s : stringList) {
-            System.out.println(s);
             info.addStringPermission(s);
         }
         return info;

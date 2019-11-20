@@ -50,12 +50,28 @@
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            <div class="navbar-custom-menu" style="margin-top: 15px">
+                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">
+                    <span style="margin-right: 0px;width: 10px;height: 10px;color: white">
+                        <a href="../loginjoin/loginout" class="btn btn-link" style="color: white">注销</a>
+                    </span>
+                </a>
+            </div>
+            <div  style="margin-top: 15px">
+                <span style="margin-right: 0px;width: 10px;height: 10px;color: white">
+                    欢迎 <span th:text="${session.user.name}"></span> 登陆
+                </span>
+            </div>
+
         </nav>
     </header>
     <!-- 页面头部 /-->
     <!-- 导航侧栏 -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
+        <div class="user-panel">
+            <div style="margin-right: 0px;width: 10px;height: 10px"> 454545645645645645</div>
+        </div>
         <section class="sidebar">
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
@@ -71,7 +87,11 @@
 				   		 	</span>
                     </a>
                     <ul class="treeview-menu">
-
+                        <li>
+                            <a href="seller.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>发布商品
+                            </a>
+                        </li>
                         <li>
                             <a href="seller_1.html" target="iframe">
                                 <i class="fa fa-circle-o"></i>商品展示
@@ -87,7 +107,7 @@
                 <li class="treeview" shiro:hasPermission="trade:manger">
                     <a href="#">
                         <i class="fa fa-folder"></i>
-                        <span>交易管理</span>
+                        <span>订单管理</span>
                         <span class="pull-right-container">
 				       			<i class="fa fa-angle-left pull-right"></i>
 				   		 	</span>
@@ -96,12 +116,12 @@
 
                         <li>
                             <a href="../orderPage/toShowOrder" target="iframe">
-                                <i class="fa fa-circle-o"></i>订单管理
+                                <i class="fa fa-circle-o"></i>订单列表
                             </a>
                         </li>
                         <li>
                             <a href="specification.html" target="iframe">
-                                <i class="fa fa-circle-o"></i>评价
+                                <i class="fa fa-circle-o"></i>评论列表
                             </a>
                         </li>
                         <li>
@@ -111,7 +131,28 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview" shiro:hasPermission="ad:manger">
+                    <a href="#">
+                        <i class="fa fa-folder"></i>
+                        <span>广告管理</span>
+                        <span class="pull-right-container">
+				       			<i class="fa fa-angle-left pull-right"></i>
+				   		 	</span>
+                    </a>
+                    <ul class="treeview-menu">
 
+                        <li>
+                            <a href="content_category.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>广告详情
+                            </a>
+                        </li>
+                        <li>
+                            <a href="content.html" target="iframe">
+                                <i class="fa fa-circle-o"></i>发布广告
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview" shiro:hasPermission="finance:manger">
                     <a href="#">
                         <i class="fa fa-folder"></i>
@@ -161,7 +202,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview" shiro:hasPermission="setting:userManger">
+                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-folder"></i>
                         <span>系统设置</span>
@@ -170,12 +211,12 @@
 				   		 	</span>
                     </a>
                     <ul class="treeview-menu">
-                        <li>
+                        <li shiro:hasPermission="setting:userManger">
                             <a href="../querywebuser" target="iframe">
                                 <i class="fa fa-circle-o"></i>用户管理
                             </a>
                         </li>
-                        <li>
+                        <li shiro:hasPermission="setting:roleManger">
                             <a href="../toqueryRole" target="iframe">
                                 <i class="fa fa-circle-o"></i>角色管理
                             </a>
@@ -183,6 +224,11 @@
                         <li>
                             <a href="../toupdateUser" target="iframe">
                                 <i class="fa fa-circle-o"></i>个人资料
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../toupdatepwd" target="iframe">
+                                <i class="fa fa-circle-o"></i>修改密码
                             </a>
                         </li>
                     </ul>

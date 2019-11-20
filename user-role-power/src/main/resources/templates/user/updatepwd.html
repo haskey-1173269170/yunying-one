@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-table/bootstrap-table.css">
+    <script src="../plugins/bootstrap/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-bootbox/bootbox.js"></script>
+</head>
+<body>
+    <div class="form-horizontal"  style="margin-top: 10px">
+        <div class="form-group">
+            <label for="oldpwd" class="col-sm-2 control-label">旧密码</label>
+            <div class="col-sm-8">
+                <input type="password" id="oldpwd" name="oldpwd" class="form-control" placeholder="旧密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="newpwd" class="col-sm-2 control-label">新密码</label>
+            <div class="col-sm-8">
+                <input type="password" id="newpwd" name="createDate" class="form-control" placeholder="新密码" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="newpwd2" class="col-sm-2 control-label">新密码</label>
+            <div class="col-sm-8">
+                <input type="password" id="newpwd2" name="createDate" class="form-control" onblur="checkpwd()" placeholder="新密码" >
+                <span id="span"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label date"></label>
+            <div class="col-sm-8">
+                <input class="btn btn-success" type="button" onclick="updateWebUser()" value="保存">
+            </div>
+        </div>
+    </div>
+<script>
+    function checkpwd() {
+        var newpwd = $("#newpwd").val()
+        var newpwd2 = $("#newpwd2").val()
+        if(newpwd!=newpwd2){
+           $("#span").html("<font color='#dc143c'>两次密码输入不一致</font>")
+            return false;
+        }else {
+            $("#span").html("")
+            return true;
+        }
+    }
+    function updateWebUser() {
+        if (checkpwd()){
+            var oldpwd = $("#oldpwd").val();
+            var newpwd = $("#newpwd").val()
+            $.ajax({
+                url:"../user/updatePwd",
+                data:{"oldpwd":oldpwd,"newpwd":newpwd},
+                success:function (data) {
+                   if (data=="success"){
+                       bootbox.alert({
+                           size: "small",
+                           title: "提示",
+                           message: "修改成功",
+                           callback: function () { /* your callback code */
+                           }
+                       })
+                   }else {
+                       bootbox.alert({
+                           size: "small",
+                           title: "提示",
+                           message: "原密码错误",
+                           callback: function () { /* your callback code */
+                           }
+                       })
+                   }
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -51,5 +52,21 @@ public class UserController {
     @ResponseBody
     public List<Map<String,Object>> querArea(Integer pid){
         return userService.querArea(pid);
+    }
+    @RequestMapping("queryUserById")
+    @ResponseBody
+    public WebUser queryUserById(HttpServletRequest request){
+       WebUser webUser = (WebUser) request.getSession().getAttribute("user");
+       return userService.queryUserById(webUser.getUserid());
+    }
+    @RequestMapping("updateWebUser")
+    @ResponseBody
+    public void updateWebUser(WebUser webUser){
+        userService.updateWebUser(webUser);
+    }
+    @RequestMapping("updatePwd")
+    @ResponseBody
+    public String updatePwd(String oldpwd, String newpwd, HttpServletRequest request){
+        return userService.updatePwd(oldpwd,newpwd,request);
     }
 }

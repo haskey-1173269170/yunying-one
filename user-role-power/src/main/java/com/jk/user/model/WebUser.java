@@ -22,6 +22,13 @@ public class WebUser implements Serializable {
     private Integer userSex;
     private Integer age;
     private Integer areaId;
+    private Integer shenId;
+    private String shengname;
+    private Integer shiId;
+    private String shiname;
+    private String quname;
+    private Integer userArea;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -145,5 +152,53 @@ public class WebUser implements Serializable {
 
     public void setAreaId(Integer areaId) {
         this.areaId = areaId;
+    }
+
+    public Integer getShenId() {
+        return shenId;
+    }
+
+    public void setShenId(Integer shenId) {
+        this.shenId = shenId;
+    }
+
+    public Integer getShiId() {
+        return shiId;
+    }
+
+    public void setShiId(Integer shiId) {
+        this.shiId = shiId;
+    }
+
+    public String getShengname() {
+        return shengname;
+    }
+
+    public void setShengname(String shengname) {
+        this.shengname = shengname;
+    }
+
+    public String getShiname() {
+        return shiname;
+    }
+
+    public void setShiname(String shiname) {
+        this.shiname = shiname;
+    }
+
+    public String getQuname() {
+        return quname;
+    }
+
+    public void setQuname(String quname) {
+        this.quname = quname;
+    }
+
+    public Integer getUserArea() {
+        return userArea;
+    }
+
+    public void setUserArea(Integer userArea) {
+        this.userArea = userArea;
     }
 }

@@ -73,21 +73,23 @@
             columns: [{checkbox: true},
                 {field: 'userName', title: '用户名', width: 100},
                 {field: 'name', title: '姓名', width: 100},
-                {field: 'userImg', title: '图片', width: 100},
                 {
                     field: 'userSex', title: '性别', width: 100,
                     formatter: function (value, row, index) {
                         return value == 1 ? "男" : "女";
                     }
                 },
-                {field: 'age', title: '年龄', width: 100},
                 {
                     field: 'birthday', title: '生日',
-
+                    formatter: function (value, row, index) {
+                        return new Date(value).toLocaleDateString();
+                    }
                 },
                 {
                     field: 'createDate', title: '入职时间',
-
+                    formatter: function (value, row, index) {
+                        return new Date(value).toLocaleDateString();
+                    }
                 },
                 {field: 'area', title: '地区'},
                 {field: 'rname', title: '角色', width: 100},

@@ -77,6 +77,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         // 放过登录页面拦截
         filterChainDefinitionMap.put("/loginjoin/*", "anon");
+        filterChainDefinitionMap.put("/plugins/*", "anon");
+        filterChainDefinitionMap.put("/assets/*", "anon");
+        filterChainDefinitionMap.put("/user/querArea", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         // 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了

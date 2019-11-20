@@ -7,6 +7,7 @@ import com.jk.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,4 +67,32 @@ public class UserServiceImpl implements UserService {
         List<Map<String, Object>> mapList =  userMapper.querArea(pid);
         return mapList;
     }
+
+    @Override
+    public WebUser queryUserById(Integer userid) {
+        return userMapper.queryUserById(userid);
+    }
+
+    @Override
+    public void updateWebUser(WebUser webUser) {
+        userMapper.updateWebUser(webUser);
+    }
+
+    @Override
+    public String updatePwd(String oldpwd, String newpwd, HttpServletRequest request) {
+        WebUser webUser = (WebUser) request.getSession().getAttribute("user");
+        String pwd = userMapper.queryPwdById(webUser.getUserid());
+        if (pwd.equals(oldpwd)){
+            userMapper.updatePwd(webUser.getUserid(),newpwd);
+            return "success";
+        }
+        return "fail";
+
+    }
+
+    @Override
+    public void addWebUser(WebUser webUser) {
+        userMapper.addWebUser(webUser);
+    }
+
 }

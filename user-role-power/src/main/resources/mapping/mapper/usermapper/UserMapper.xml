@@ -77,52 +77,30 @@
         </if>
 
     </select>
-
-
-    <!--<select id="queryUser" resultType="com.jk.model.User">
-      SELECT
-          u.*,
-          GROUP_CONCAT(r.rname SEPARATOR'-') as rname
-      FROM
-          t_user u
-      LEFT JOIN t_user_role ur ON u.userId = ur.user_id
-      LEFT JOIN t_role r ON ur.role_id = r.rid GROUP BY u.userId
-      limit #{s},#{r}
+    <select id="queryUserById" resultType="com.jk.user.model.WebUser" parameterType="int">
+        select a.*,a2.name as shiname,a2.id AS shiId,a3.id as shenId,a3.name as shengname,a1.name as quname from web_user a
+        LEFT JOIN xx_area a1 ON a.userArea=a1.id
+        LEFT JOIN xx_area a2 ON a1.parent =a2.id
+        LEFT JOIN xx_area a3 ON a3.id=a2.parent
+        where a.userId= #{value}
     </select>
-    <select id="queryCount" resultType="int">
-          select count(*) FROM(
-          SELECT
-              COUNT(*)
-          FROM
-              t_user u
-          LEFT JOIN t_user_role ur ON u.userId = ur.user_id
-          LEFT JOIN t_role r ON ur.role_id = r.rid GROUP BY u.userId) a
+    <update id="updateWebUser" parameterType="com.jk.user.model.WebUser">
+        update web_user set
+        userSex=#{userSex},
+        userArea=#{userArea},
+        birthday=#{birthday},
+        name =#{name}
+        where userId=#{userid}
+    </update>
+    <select id="queryPwdById" resultType="java.lang.String" parameterType="int">
+        select userPwd from web_user where userId=#{value}
     </select>
-      <delete id="deleteUserById">
-          delete from t_user where userId in (#{id})
-      </delete>
-      <insert id="addUser" parameterType="com.jk.model.User" keyProperty="userId" useGeneratedKeys="true">
-          INSERT INTO t_user  (
-              userName,
-              userPwd,
-              userSex,
-              userDate,
-              userImg,
-              phone
-          )
-          VALUES
-              (#{userName},#{userPwd},#{userSex},#{userDate},#{userImg},#{phone})
-      </insert>
-      <insert id="addUserRole" parameterType="com.jk.model.User" >
-          insert into t_user_role(user_id,role_id) values
-          <foreach collection="ids" item="a" separator=",">
-              (#{id},#{a})
-          </foreach>
-      </insert>
-      <delete id="deleteUserRoleByUserId">
-          delete from t_user_role where user_id in (#{id})
-      </delete>
-      <select id="queryUserByUserName" resultType="com.jk.model.User" parameterType="com.jk.model.User">
-          select * from t_user where userName = #{userName}
-      </select>-->
+    <update id="updatePwd">
+        update web_user set userPwd=#{pwd} where userId=#{id}
+    </update>
+    <insert id="addWebUser" parameterType="com.jk.user.model.WebUser">
+        insert into web_user(userName,userPwd,userSex,createDate,userArea,name,birthday)
+        values(#{userName},#{userPwd},#{userSex},sysdate(),#{userArea},#{name},#{birthday})
+    </insert>
+
 </mapper>

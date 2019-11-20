@@ -1,6 +1,9 @@
 package com.jk.login.controller;
 
+import com.jk.user.model.WebUser;
+import com.jk.user.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  **/
 @Controller
 public class toPage {
+
     @RequestMapping("main")
     public String toMain() {
         return "main";
@@ -42,5 +46,9 @@ public class toPage {
     @RequestMapping("show")
     public String show() {
         return "shouw";
+    }
+    @RequestMapping("toupdatepwd")
+    public String toupdatepwd(){
+        return "user/updatepwd";
     }
 }

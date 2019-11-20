@@ -1,10 +1,13 @@
 package com.jk.login.controller;
 
+import com.jk.user.model.WebUser;
+import com.jk.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("loginjoin")
 public class Login {
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("tologin")
     public String toLogin() {
         return "login";
@@ -54,4 +60,14 @@ public class Login {
         }
         return "login";
     }
+    @RequestMapping("toJoin")
+    public String toJoin(){
+        return "join";
+    }
+    @RequestMapping("addWebUser")
+    @ResponseBody
+    public void addWebUser(WebUser webUser){
+        userService.addWebUser(webUser);
+    }
+
 }
