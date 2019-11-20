@@ -53,7 +53,6 @@
         </nav>
     </header>
     <!-- 页面头部 /-->
-
     <!-- 导航侧栏 -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -61,9 +60,8 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">菜单</li>
-                <li id="admin-index"><a href="index.html"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
-
-                &lt;!&ndash; 菜单 &ndash;&gt;
+                <li id="admin-index"><a href="/orderPage/toindex"target="iframe"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+                <!--菜单-->
                 <li class="treeview" shiro:hasPermission="trade:manger">
                     <a href="#">
                         <i class="fa fa-folder"></i>
@@ -97,7 +95,7 @@
                     <ul class="treeview-menu">
 
                         <li>
-                            <a href="brand.html" target="iframe">
+                            <a href="../orderPage/toShowOrder" target="iframe">
                                 <i class="fa fa-circle-o"></i>订单管理
                             </a>
                         </li>
@@ -200,7 +198,10 @@
     <!-- 内容区域 -->
     <div class="content-wrapper">
         <iframe width="100%" id="iframe" name="iframe" onload="SetIFrameHeight()"
-                frameborder="0" src=""></iframe>
+                frameborder="0" src="/orderPage/toindex">
+
+
+        </iframe>
 
     </div>
     <footer class="main-footer">
@@ -209,38 +210,7 @@
         </div>
         <strong>Copyright &copy; 2014-2017 <a href="http://www.itcast.cn">研究院研发部</a>.</strong> All rights reserved.
     </footer>
-
 </div>
-<script type="text/javascript">
-    $(function(){
-        initTree();
-    })
-    function initTree(){
-        $.ajax({
-            url:"../power/initPower",
-            type:"post",
-            success:function(data){
-                $('#myTree2').treeview({
-                    data:data,
-                    highlightSelected:true,
-                    color: "#428bca",
-                    onNodeSelected:function(event, node) {
-                        alert(123)
-                       /* location.href=node.href*/
-                       // $("#iframe").prop("src",node.href)
-                        //windows.open(node.href,"#iframe","窗口外观设定");
-                      /* $.addtabs({iframeHeight: 550});
-                        $.addtabs.add({
-                            id:node.id,
-                            title:node.text,
-                            url:node.href,
-                        });*/
-                    }
-                })
-            }
-        })
-    }
-</script>
 </body>
 
 </html>

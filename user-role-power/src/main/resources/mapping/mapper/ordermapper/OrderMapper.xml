@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.order.mapper.OrderMapper">
+
+    <select id="queryOrderList" resultType="com.jk.order.model.TbOrder">
+        select * from t_order
+    </select>
+    <select id="queryOrderListAll" resultType="com.jk.order.model.TbOrder">
+        select * from t_order
+    </select>
+    <delete id="delOrderByIds">
+        delete from t_order where orderid in
+        <foreach collection="array" item="orderid" open="(" separator="," close=")">
+            #{orderid}
+        </foreach>
+    </delete>
+    <delete id="deleteOrderInfo">
+        delete from t_orderinfo where orderinfooid in
+        <foreach collection="array" item="orderid" open="(" separator="," close=")">
+            #{orderid}
+        </foreach>
+    </delete>
+    <select id="queryOrderInfoByOrderId" resultType="com.jk.order.model.TOrderinfo">
+        select  *  from t_order o,t_orderinfo oi where oi.orderinfooid = o.orderid and o.orderid = #{orderid}
+    </select>
+</mapper>
