@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.adv.mapper.AdvMapper">
+
+    <select id="queryAdv" resultType="com.jk.adv.model.Adv">
+        select * from t_adv where 1=1
+        <if test="mindate != null">
+            and advdate >= #{mindate}
+        </if>
+        <if test="maxdate != null">
+            and advdate &lt;= #{maxdate}
+        </if>
+    </select>
+    <delete id="deleteAdvById">
+        delete from t_adv where advid = #{id}
+    </delete>
+    <insert id="addAdv">
+        insert into t_adv(advname,advimg,advstatus,advdate,advinfo,advurl) values(#{advname},#{advimg},1,sysdate(),#{advinfo},#{advurl})
+    </insert>
+    <update id="updateStatus">
+        update t_adv set advstatus = #{info} where advid = #{advid}
+    </update>
+</mapper>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>广告</title>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap3/css/bootstrap.css"/>
+    <script type="text/javascript" src="../plugins/bootstrap/bootstrap3/js/bootstrap.js"></script>
+    <!-- bootstrap 表格 -->
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-table/bootstrap-table.css" />
+    <script src="../plugins/bootstrap/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- bootstrap treeview -->
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <script src="../plugins/bootstrap/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- bootstrap 选项卡 -->
+    <link rel="stylesheet" href="../plugins/bootstrap/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script src="../plugins/bootstrap/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- bootstrap日期插件 -->
+    <script src="../plugins/bootstrap/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <!-- bootstrap 弹框 -->
+    <script src="../plugins/bootstrap/bootstrap-bootbox/bootbox.js"></script>
+    <!-- bootstrap上传插件 -->
+    <script src="../plugins/bootstrap/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-fileinput/js/locales/zh.js"></script>
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-fileinput/css/fileinput.css">
+</head>
+<body>
+    <table class="table" id="myTable"></table>
+    <script>
+        $(function () {
+            initTable();
+        })
+        function initTable(){
+            //列表展示
+            $('#myTable').bootstrapTable({
+                toolbar:'#toolbar',
+                url:'../adv/queryAdv',//获取数据地址
+                pagination:true, //是否展示分页
+                pageList:[2, 3, 6, 8],//分页组件
+                pageNumber:1,
+                pageSize:5,//默认每页条数
+                search:true,//是否显示搜索框
+                //searchText:'',//初始化搜索文字
+                showColumns:false,//是否显示 内容列下拉框
+                //showToggle:true,//是否显示 切换试图（table/card）按钮
+                showPaginationSwitch:false,//是否显示 数据条数选择框
+                showRefresh:false,//是否显示刷新按钮
+                detailView:false,//设置为 true 可以显示详细页面模式。
+                showFooter:false,//是否显示列脚
+                clickToSelect: true, //是否启用点击选中行
+                sidePagination:'client',//分页方式：client客户端分页，server服务端分页（*
+                striped:true,
+                queryParams:function(){
+                    return{
+                        page:this.pageNumber,
+                        rows:this.pageSize
+                    };
+                },
+                columns:[
+                    {field:'2',align:"center",checkbox:true},
+                    {field:'advid',title:'广告编号',align:"center"},
+                    {field:'advname',title:'广告主题',align:"center"},
+                    {field:'advimg',title:'海报',align:"center",
+                        formatter:function (value) {
+                            return "<img src='"+value+"' width='100px'>";
+                        }
+                    },
+                    {field:'advinfo',title:'广告简介',align:"center"},
+                    {field:'advdate',title:'发布时间',align:"center"},
+                    {field:'advurl',title:'广告链接',align:"center"},
+                    {field:'advstatus',title:'发布状态',align:"center",
+                        formatter:function(value,row,index){
+                            if(value==1){
+                                return "<a class='btn  btn-link' href='javascript:updSta(2,"+row.advid+")'>正在发布</a>";
+                            }
+                            if(value==2){
+                                return "<a class='btn  btn-link' href='javascript:updSta(1,"+row.advid+")'>停止发布</a>";
+                            }
+                        }
+                    },
+                    {field:'1',title:'操作',align:"center",
+                        formatter:function(value,row,index){
+                            return "<button onclick='deleteAdvById("+row.advid+")' class='btn  btn-warning  glyphicon glyphicon-trash'></button>";
+                        }
+                    }
+                ]
+            })
+        }
+
+        function updSta(info,advid){
+            $.ajax({
+                url:"../adv/updateStatus",
+                type:"post",
+                data:{info:info,advid:advid},
+                success:function(){
+                    $('#myTable').bootstrapTable("refresh");
+                }
+            })
+        }
+
+        function deleteAdvById(advid){
+            $.ajax({
+                url:"../adv/deleteAdvById",
+                type:"post",
+                data:{id:advid},
+                success:function(){
+                    $('#myTable').bootstrapTable("refresh");
+                }
+            })
+        }
+    </script>
+</body>
+</html>

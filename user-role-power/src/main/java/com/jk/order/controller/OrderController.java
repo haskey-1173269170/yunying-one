@@ -28,6 +28,15 @@ public class OrderController {
     @RequestMapping("queryOrder")
     @ResponseBody
     public Map queryOrder(Integer page, Integer rows, TbOrder order){
+        if ("".equals(order.getOrderid())){
+            order.setOrderid(null);
+        }
+        if("".equals(order.getMintime())){
+            order.setMintime(null);
+        }
+        if("".equals(order.getMaxtime())){
+            order.setMaxtime(null);
+        }
         return orderService.queryOrder(page,rows,order);
     }
     @RequestMapping("delOrderByIds")

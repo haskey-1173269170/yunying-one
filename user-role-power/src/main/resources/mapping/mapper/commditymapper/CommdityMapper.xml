@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="com.jk.commodity.mapper.CommodityMapper" >
+    <select id="queryCommodity" resultType="com.jk.commodity.model.Commodity">
+        select tcd.*,tpd.productVersion_name productVersionname,tpc.productCpu_name productCpuname,
+        tpr.productOrigin_name productOriginname,tpb.productBrand_name productBrandname,tos.operatingSystem_name operatingSystemName
+
+        from t_commodity tcd
+
+        LEFT JOIN t_productversion tpd on tcd.productVersionid = tpd.productVersion_id
+
+        LEFT JOIN t_productcpu tpc on tcd.productCpuId = tpc.productCpu_id
+
+        LEFT JOIN t_productorigin tpr on tcd.productOriginId = tpr.productOrigin_id
+
+        LEFT JOIN t_productbrand tpb on tcd.productBrand = tpb.productBrand_id
+
+        LEFT JOIN t_operatingsystem tos on tcd.operatingSystem = tos.operatingSystem_id
+
+        where tcd.productState = 1
+
+        <if test="productName!=null and productName!=''">
+            and productName like '%${productName}%'
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            and timeToMarket &gt; #{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and timeToMarket &lt; #{endDate}
+        </if>
+    </select>
+    <select id="queryNotSoldCommodity" resultType="com.jk.commodity.model.Commodity">
+        select tcd.*,tpd.productVersion_name productVersionname,tpc.productCpu_name productCpuname,
+        tpr.productOrigin_name productOriginname,tpb.productBrand_name productBrandname,tos.operatingSystem_name operatingSystemName
+
+        from t_commodity tcd
+
+        LEFT JOIN t_productversion tpd on tcd.productVersionid = tpd.productVersion_id
+
+        LEFT JOIN t_productcpu tpc on tcd.productCpuId = tpc.productCpu_id
+
+        LEFT JOIN t_productorigin tpr on tcd.productOriginId = tpr.productOrigin_id
+
+        LEFT JOIN t_productbrand tpb on tcd.productBrand = tpb.productBrand_id
+
+        LEFT JOIN t_operatingsystem tos on tcd.operatingSystem = tos.operatingSystem_id
+
+        where tcd.productState = 2
+    </select>
+
+    <update id="soldOut">
+        update t_commodity
+        <set>
+            productState = 2,upAndDownTime=sysdate()
+        </set>
+        where productId = #{id}
+    </update>
+    <update id="putaway">
+        update t_commodity
+        <set>
+            productState = 1,upAndDownTime=sysdate()
+        </set>
+        where productId = #{id}
+    </update>
+
+    <delete id="deleteAll">
+        delete from t_commodity where productId in (${ids})
+    </delete>
+    <select id="particulars" resultType="com.jk.image.model.Image">
+        select tpc.*,GROUP_CONCAT(tpv.productVersion_name,'-') versionName from t_productcolor tpc
+
+        LEFT JOIN t_commodity_color tcc on tpc.productColor_id = tcc.productColorid
+
+        LEFT JOIN t_commodity tcd on tcd.productId = tcc.commodityid
+
+        LEFT JOIN t_version_color tvc on tpc.productColor_id = tvc.productColorid
+
+        LEFT JOIN t_productversion tpv on tpv.productVersion_id = tvc.productVersionid
+
+        where tcd.productId = #{id}
+
+        GROUP BY tpc.productColor_id
+    </select>
+
+    <update id="zengCount">
+
+        update t_productcolor
+        <set>
+            productColor_count = productColor_count + #{productColor_count}
+        </set>
+        where productColor_id = #{productColor_id}
+    </update>
+    <update id="jianCount">
+        update t_productcolor
+        <set>
+            productColor_count = productColor_count - #{productColor_count}
+        </set>
+        where productColor_id = #{productColor_id}
+    </update>
+
+    <select id="queryCpu" resultType="com.jk.commodity.model.ProductCPU">
+        select * from t_productcpu
+    </select>
+    <select id="queryOrigin" resultType="com.jk.commodity.model.ProductOrigin">
+        select * from t_productorigin
+    </select>
+    <select id="querySystem" resultType="com.jk.commodity.model.Operatingsystem">
+        select * from t_operatingsystem
+    </select>
+    <select id="queryType" resultType="com.jk.commodity.model.Type">
+        select * from t_type
+    </select>
+    <select id="queryBrand" resultType="com.jk.commodity.model.Productbrand">
+        select * from t_productbrand where productBrand_typeId = #{id}
+    </select>
+
+    <select id="queryColor" resultType="com.jk.image.model.Image">
+        select * from t_productcolor
+    </select>
+    <select id="queryVersion" resultType="com.jk.commodity.model.Productversion">
+        select * from t_productversion
+    </select>
+
+    <insert id="addCommodity" useGeneratedKeys="true" keyProperty="productId">
+        insert into t_commodity (productName,productIntroduction,productState,commodityPrice,productCpuId,productWeight,
+            productOriginId,homeScreenSize,numberOfCameras,operatingSystem,hotspot,gamePerformance,aspectRatio,upAndDownTime,timeToMarket,
+            theNetModel,resolutionRatio,theStandbyTime,commoditySales,charger,wirelessCharging,packing,productBrand
+        )
+        values (
+            #{productName},#{productIntroduction},1,#{commodityPrice},#{productCpuId},#{productWeight},#{productOriginId}
+            ,#{homeScreenSize},#{numberOfCameras},#{operatingSystem},#{hotspot},#{gamePerformance},#{aspectRatio},sysdate()
+            ,#{timeToMarket},#{theNetModel},#{resolutionRatio},#{theStandbyTime},#{commoditySales},#{charger},#{wirelessCharging}
+            ,#{packing},#{productBrand}
+        )
+    </insert>
+    <insert id="addCommodityAndColor" parameterType="list">
+        insert into t_commodity_color (commodityid,productColorid)
+        values
+        <foreach collection="list" item="l" separator=",">
+            (#{l.commodityid},#{l.productColorid})
+        </foreach>
+    </insert>
+
+    <select id="xiangQing" resultType="com.jk.commodity.model.Commodity">
+          select tcd.*,tpd.productVersion_name productVersionname,tpc.productCpu_name productCpuname,
+        tpr.productOrigin_name productOriginname,tpb.productBrand_name productBrandname,tos.operatingSystem_name operatingSystemName
+
+        from t_commodity tcd
+
+        LEFT JOIN t_productversion tpd on tcd.productVersionid = tpd.productVersion_id
+
+        LEFT JOIN t_productcpu tpc on tcd.productCpuId = tpc.productCpu_id
+
+        LEFT JOIN t_productorigin tpr on tcd.productOriginId = tpr.productOrigin_id
+
+        LEFT JOIN t_productbrand tpb on tcd.productBrand = tpb.productBrand_id
+
+        LEFT JOIN t_operatingsystem tos on tcd.operatingSystem = tos.operatingSystem_id
+
+        where tcd.productState = 1 and tcd.productId = #{id}
+    </select>
+  </mapper>

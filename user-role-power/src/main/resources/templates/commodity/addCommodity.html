@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- jquery -->
+    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="../js/bootstrap3/css/bootstrap.css"/>
+    <script type="text/javascript" src="../js/bootstrap3/js/bootstrap.js"></script>
+    <!-- bootstrap treeview -->
+    <link rel="stylesheet" href="../js/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <script src="../js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- bootstrap 选项卡 -->
+    <link rel="stylesheet" href="../js/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script src="../js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- bootstrap 表格 -->
+    <link rel="stylesheet" href="../js/bootstrap-table/bootstrap-table.css" />
+    <script src="../js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <!-- bootstrap treeview -->
+    <link rel="stylesheet" href="../js/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <script src="../js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <!-- bootstrap 选项卡 -->
+    <link rel="stylesheet" href="../js/bootStrap-addTabs/bootstrap.addtabs.css">
+    <script src="../js/bootStrap-addTabs/bootstrap.addtabs.min.js"></script>
+    <!-- bootstrap日期插件 -->
+    <script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <!-- bootstrap 弹框 -->
+    <script src="../js/bootstrap-bootbox/bootbox.js"></script>
+    <!-- bootstrap上传插件 -->
+    <script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-fileinput/css/fileinput.css">
+</head>
+<body>
+<form class="form-horizontal" id="saveCommodityForm">
+
+    <div class="form-group">
+        <label for="productName" class="col-sm-2 control-label">商品名称</label>
+        <div class="col-sm-8">
+            <input type="text" name="productName" id="productName" class="form-control" placeholder="名称" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="productIntroduction" class="col-sm-2 control-label">商品简介</label>
+        <div class="col-sm-8">
+            <input type="text" name="productIntroduction" id="productIntroduction" class="form-control" placeholder="简介" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="commodityPrice" class="col-sm-2 control-label">商品价格</label>
+        <div class="col-sm-8">
+            <input type="text" name="commodityPrice" id="commodityPrice" class="form-control" placeholder="价格" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="productCpuId" class="col-sm-2 control-label">商品cpu</label>
+        <div class="col-sm-8">
+            <select id="productCpuId" name="productCpuId" class="form-control" ></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="productWeight" class="col-sm-2 control-label">商品重量</label>
+        <div class="col-sm-8">
+            <input type="text" name="productWeight" id="productWeight" class="form-control" placeholder="g" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="productOriginId" class="col-sm-2 control-label">产地</label>
+        <div class="col-sm-8">
+            <select id="productOriginId" name="productOriginId" class="form-control" ></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="homeScreenSize" class="col-sm-2 control-label">主屏幕尺寸</label>
+        <div class="col-sm-8">
+            <input type="text" name="homeScreenSize" id="homeScreenSize" class="form-control" placeholder="英寸" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="numberOfCameras" class="col-sm-2 control-label">摄像头数量</label>
+        <div class="col-sm-8">
+            <input type="text" name="numberOfCameras" id="numberOfCameras" class="form-control" placeholder="摄像" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="operatingSystem" class="col-sm-2 control-label">操作系统</label>
+        <div class="col-sm-8">
+            <select id="operatingSystem" name="operatingSystem" class="form-control" ></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="hotspot" class="col-sm-2 control-label">热点</label>
+        <div class="col-sm-8">
+            <input type="text" name="hotspot" id="hotspot" class="form-control" placeholder="热点" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="gamePerformance" class="col-sm-2 control-label">游戏性能</label>
+        <div class="col-sm-8">
+            <input type="text" name="gamePerformance" id="gamePerformance" class="form-control" placeholder="游戏性能" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="aspectRatio" class="col-sm-2 control-label">屏幕比例</label>
+        <div class="col-sm-8">
+            <input type="text" name="aspectRatio" id="aspectRatio" class="form-control" placeholder="屏幕比例" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="timeToMarket" class="col-sm-2 control-label">上市时间</label>
+        <div class="col-sm-8">
+            <input type="text" name="timeToMarket" id="timeToMarket" class="form-control date" placeholder="上市时间" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="theNetModel" class="col-sm-2 control-label">入网型号</label>
+        <div class="col-sm-8">
+            <input type="text" name="theNetModel" id="theNetModel" class="form-control" placeholder="入网型号" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="resolutionRatio" class="col-sm-2 control-label">分辨率</label>
+        <div class="col-sm-8">
+            <input type="text" name="resolutionRatio" id="resolutionRatio" class="form-control" placeholder="分辨率" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="type" class="col-sm-2 control-label">类别</label>
+        <div class="col-sm-8">
+            <select id="type" name="type" class="form-control" onchange="queryBrand(this)"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="productBrand" class="col-sm-2 control-label">品牌</label>
+        <div class="col-sm-8">
+            <select id="productBrand" name="productBrand" class="form-control" ></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="theStandbyTime" class="col-sm-2 control-label">待机时长</label>
+        <div class="col-sm-8">
+            <input type="text" name="theStandbyTime" id="theStandbyTime" class="form-control" placeholder="待机时长" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="commoditySales" class="col-sm-2 control-label">商品销量</label>
+        <div class="col-sm-8">
+            <input type="text" name="commoditySales" id="commoditySales" class="form-control" placeholder="商品销量" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="charger" class="col-sm-2 control-label">充电器</label>
+        <div class="col-sm-8">
+            <input type="text" name="charger" id="charger" class="form-control" placeholder="充电器" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="wirelessCharging" class="col-sm-2 control-label">是否支持无线充电</label>
+        <div class="col-sm-8">
+            <select id="wirelessCharging" name="wirelessCharging" class="form-control" >
+                <option value="1">是</option>
+                <option value="2">否</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="packing" class="col-sm-2 control-label">包装清单</label>
+        <div class="col-sm-8">
+            <input type="text" name="packing" id="packing" class="form-control" placeholder="包装清单" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="productColorName" class="col-sm-2 control-label">颜色</label>
+        <div class="col-sm-8">
+            <select id="productColorName"  multiple name="productColorName" class="form-control selectpicker" ></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="tijiao" class="col-sm-2 control-label">提交</label>
+        <div class="col-sm-8">
+            <input class="btn btn-default" type="button" value="提交" onclick="addCommodity()" id="tijiao"/>
+        </div>
+    </div>
+</form>
+<script>
+
+        $(function () {
+            queryCpu();
+            queryOrigin();
+            querySystem();
+            queryType();
+            queryColor();
+        })
+        function addCommodity() {
+            $.ajax({
+                url:"../commodity/addCommodity",
+                data:$("#saveCommodityForm").serialize(),
+                success:function () {
+                    alert("成功.jpg");
+                }
+            })
+        }
+
+        function queryColor() {
+            $.ajax({
+                url:"../commodity/queryColor",
+                success:function (data) {
+                    var aa = "";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].productColor_id+"'>"+data[i].productColor_name+"</option>";
+                    }
+                    $("#productColorName").html(aa);
+                }
+            })
+        }
+
+        function queryBrand(id) {
+            $.ajax({
+                url:"../commodity/queryBrand?id="+id.value,
+                success:function (data) {
+                    var aa = "";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].productBrand_id+"'>"+data[i].productBrand_name+"</option>";
+                    }
+                    $("#productBrand").html(aa);
+                }
+            })
+        }
+        function queryType() {
+            $.ajax({
+                url:"../commodity/queryType",
+                success:function (data) {
+                    var aa = "<option value='-1'>请选择</option>";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].type_id+"'>"+data[i].type_name+"</option>";
+                    }
+                    $("#type").html(aa);
+                }
+            })
+        }
+        function querySystem() {
+            $.ajax({
+                url:"../commodity/querySystem",
+                success:function (data) {
+                    var aa = "";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].operatingSystem_id+"'>"+data[i].operatingSystem_name+"</option>";
+                    }
+                    $("#operatingSystem").html(aa);
+                }
+            })
+        }
+        function queryOrigin() {
+            $.ajax({
+                url:"../commodity/queryOrigin",
+                success:function (data) {
+                    var aa = "";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].productOrigin_id+"'>"+data[i].productOrigin_name+"</option>";
+                    }
+                    $("#productOriginId").html(aa);
+                }
+            })
+        }
+        function queryCpu() {
+            $.ajax({
+                url:"../commodity/queryCpu",
+                success:function (data) {
+                    var aa = "";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].productCpu_id+"'>"+data[i].productCpu_name+"</option>";
+                    }
+                    $("#productCpuId").html(aa);
+                }
+            })
+        }
+        $('.date').datetimepicker({
+            language: 'zh-CN',//显示中文
+//			  format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+            format: 'yyyy-mm-dd',//显示格式
+            minView: "month",//设置只显示到月份
+            initialDate: new Date(),//初始化当前日期
+            autoclose: true,//选中自动关闭
+            todayBtn: true//显示今日按钮
+        });
+</script>
+</body>
+</html>

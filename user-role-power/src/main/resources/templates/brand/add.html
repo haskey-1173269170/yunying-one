@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form class="form-horizontal" id="saveBrandForm">
+        <div class="form-group" >
+            <label for="type" class="col-sm-2 control-label">类别</label>
+            <div class="col-sm-4">
+                <select id="type" name="type" class="form-control" onchange="addInput(this)"></select>
+            </div>
+            <div class="col-sm-4" id="addDivId">
+            </div>
+        </div>
+    </form>
+    <script>
+        $(function () {
+            queryType();
+        })
+        
+        function addInput(t) {
+            if(t.value!=-1){
+                $("#addDivId").html('<input  type=\"text\" name=\"productBrand_name\" id=\"productBrand_name\" class=\"form-control\" placeholder=\"品牌名称\" />');
+            }else{
+                $("#addDivId").html('');
+            }
+        }
+        function queryType() {
+            $.ajax({
+                url:"../commodity/queryType",
+                success:function (data) {
+                    var aa = "<option value='-1'>请选择</option>";
+                    for (var i=0;i<data.length;i++){
+                        aa += "<option value='"+data[i].type_id+"'>"+data[i].type_name+"</option>";
+                    }
+                    $("#type").html(aa);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

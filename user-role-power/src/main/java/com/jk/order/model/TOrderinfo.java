@@ -10,6 +10,15 @@ public class TOrderinfo {
   private long number;
   private double allprice;
 
+  private String productName;
+
+  public String getProductName() {
+    return productName;
+  }
+
+  public void setProductName(String productName) {
+    this.productName = productName;
+  }
 
   public long getOrderinfoid() {
     return orderinfoid;

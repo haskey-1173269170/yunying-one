@@ -13,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements  OrderService{
         String key = PublicCacheutils.CACHE_ORDER;
         Map<String,Object> m = new HashMap<String,Object>();
         //book判断为null需要进行判断，如果前台传值为空字符串，设定该项属性为null，否则book==null判断始终不成立
-        if (order==null&&redisTemplate.hasKey(key)) {
+        if (order.getOrderid()==null&&order.getMintime()==null&&order.getMaxtime()==null&&redisTemplate.hasKey(key)) {
             List range = redisTemplate.opsForList().range(key,(page-1)*rows,page*rows-1);
             List list2 = new ArrayList();
             for (Object o : range) {
@@ -66,7 +67,9 @@ public class OrderServiceImpl implements  OrderService{
 
     @Override
     public void delOrderByIds(String[] id) {
+        String key = PublicCacheutils.CACHE_ORDER;
         orderMapper.delOrderByIds(id);
+        redisTemplate.delete(key);
         orderMapper.deleteOrderInfo(id);
     }
 

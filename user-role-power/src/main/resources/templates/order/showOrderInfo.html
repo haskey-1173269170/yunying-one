@@ -8,19 +8,19 @@
 <h1 align="center"><span th:text="${orderid}"></span>号订单详情</h1>
 <table class="table">
     <tr>
+        <th>商品编号</th>
         <th>商品名称</th>
         <th>商品单价</th>
         <th>商品数量</th>
         <th>商品总价</th>
     </tr>
-    <span th:each="l:${list}">
-    <tr>
-        <th>${l.orderinfopid}</th>
-        <th>${l.orderinfopid}</th>
-        <th>${l.number}</th>
-        <th>${l.orderinfopid}</th>
+    <tr th:each="user:${list}">
+        <td th:text="${user.orderinfopid}"></td>
+        <td th:text="${user.productName}"></td>
+        <td th:text="${user.orderinfocprice}"></td>
+        <td th:text="${user.number}"></td>
+        <td th:text="${user.allprice}"></td>
     </tr>
-    </span>
 </table>
 </body>
 </html>

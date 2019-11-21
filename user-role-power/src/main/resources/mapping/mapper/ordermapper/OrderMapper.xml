@@ -3,7 +3,16 @@
 <mapper namespace="com.jk.order.mapper.OrderMapper">
 
     <select id="queryOrderList" resultType="com.jk.order.model.TbOrder">
-        select * from t_order
+        select * from t_order where 1=1
+        <if test="orderid !=null and orderid !=''">
+            and orderid = #{orderid}
+        </if>
+        <if test="mintime != null and mintime != ''">
+            and createtime >= #{mintime}
+        </if>
+        <if test="maxtime != null and maxtime != '' ">
+            and createtime &lt;= #{maxtime}
+        </if>
     </select>
     <select id="queryOrderListAll" resultType="com.jk.order.model.TbOrder">
         select * from t_order
@@ -21,6 +30,6 @@
         </foreach>
     </delete>
     <select id="queryOrderInfoByOrderId" resultType="com.jk.order.model.TOrderinfo">
-        select  *  from t_order o,t_orderinfo oi where oi.orderinfooid = o.orderid and o.orderid = #{orderid}
+        select  *  from t_order o,t_orderinfo oi,t_commodity c where oi.orderinfooid = o.orderid and c.productId =  oi.orderinfopid and o.orderid = #{orderid}
     </select>
 </mapper>

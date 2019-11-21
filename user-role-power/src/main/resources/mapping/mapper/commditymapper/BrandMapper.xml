@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="com.jk.Brand.mapper.BrandMapper" >
+      <select id="queryList" resultType="com.jk.commodity.model.Productbrand">
+        select * from t_productbrand
+      </select>
+      <update id="updateBrand">
+        update t_productbrand set productBrand_name = #{productBrand_name}
+        where productBrand_id = #{id}
+      </update>
+  <delete id="deleteBrand">
+    delete from t_productbrand where productBrand_id = #{id}
+  </delete>
+  <insert id="addBrand">
+    insert into t_productbrand (productBrand_name,productBrand_typeId)
+    values (#{productBrand_name},#{type})
+  </insert>
+  </mapper>

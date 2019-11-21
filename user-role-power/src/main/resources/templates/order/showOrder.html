@@ -29,12 +29,30 @@
     <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-fileinput/css/fileinput.css">
 </head>
 <body><h3 align="center">六脉，为你而生</h3>
-    <button type="button" onclick="delOrder()" class="btn btn-danger glyphicon glyphicon-minus">批量删除</button>
+
+    <form class="form-inline">
+        <div class="form-group" style="margin-left: 10px">
+            <input type="text" class="form-control" id="orderid" placeholder="请输入订单编号">
+        </div>
+        <div class="form-group"  style="margin-left: 50px">
+            <label for="mintime">下单时间</label>
+            <input type="text" class="form-control date" id="mintime" name="mintime" placeholder="起始时间">
+            --
+            <input type="text" class="form-control date" id="maxtime" name="maxtime" placeholder="结束时间">
+        </div>
+        <div class="form-group">
+        <button type="button" onclick="queryOrderWhere()" class="btn btn-danger glyphicon glyphicon-search"></button></div>
+        <div class="form-group" style="margin-left: 402px">
+        <button type="button" onclick="delOrder()" class="btn btn-danger glyphicon glyphicon-minus">批量删除</button></div>
+    </form>
     <table class="table" id="myTable"></table>
     <script>
         $(function(){
             initQueryOrder();
         })
+        function queryOrderWhere(){
+            $('#myTable').bootstrapTable("refresh");
+        }
         function  initQueryOrder(){
             //列表展示
             $('#myTable').bootstrapTable({
@@ -57,6 +75,9 @@
                 striped:true,
                 queryParams:function(){
                     return{
+                        orderid:$("#orderid").val(),
+                        mintime:$("#mintime").val(),
+                        maxtime:$("#maxtime").val(),
                         page:this.pageNumber,
                         rows:this.pageSize
                     };
@@ -72,23 +93,15 @@
                     {field:'status',title:'订单状态',align:"center",
                         formatter:function (value) {
                         //1、未付款，2、已付款，3、未发货，4、已发货，5、交易成功，6、交易关闭,
+
+                            if(value==0){
+                                return "等待付款";
+                            }
                             if(value==1){
                                 return "未付款";
                             }
                             if(value==2){
                                 return "已付款";
-                            }
-                            if(value==3){
-                                return "未发货";
-                            }
-                            if(value==4){
-                                return "已发货";
-                            }
-                            if(value==5){
-                                return "交易成功";
-                            }
-                            if(value==6){
-                                return "交易关闭";
                             }
                         }
                     },
@@ -108,13 +121,32 @@
                     {field:'createtime',title:'下单时间',align:"center"},
                     {field:'caozuo',title:'操作',align:"center",
                         formatter:function(value,row,index){
-                            return "<button class='btn  btn-link ' 	onclick='queryUserById("+row.orderid+")'>查看详情</button>";
+                            return "<button class='btn  btn-link ' 	onclick='queryOrderById("+row.orderid+")'>查看详情</button>";
                         }
                     }
                 ]
             })
         }
-
+        //弹出框
+        function queryOrderById(orderid){
+            bootbox.dialog({
+                title: "查看详情",
+                message: createAddContent("../orderPage/toShowOrderInfo?orderid="+orderid),
+                closeButton: true,
+                buttons: {
+                    "success": {
+                        "label": "<i class='icon-ok'></i>确认",
+                        "className": "btn btn-success",
+                        "callback":function(){}
+                    },
+                    "cancel": {
+                        "label": "<i class='icon-info'></i>取消",
+                        "className": "btn btn-warning",
+                        "callback":function(){}
+                    }
+                }
+            });
+        }
 
         function delOrder(){
             var arr = $('#myTable').bootstrapTable("getSelections");
@@ -132,6 +164,32 @@
                 }
             })
         }
+
+        //跳页面方法
+        var res;
+        function createAddContent(url){
+            $.ajax({
+                url:url,
+                async:false,
+                success:function(data){
+                    res = data;
+                }
+            });
+            return res;
+        }
+
+
+
+        //加载日期组件
+        $('.date').datetimepicker({
+            language: 'zh-CN',//显示中文
+            //format: 'yyyy-mm-dd hh:ii:ss',//显示格式
+            format: 'yyyy-mm-dd',//显示格式
+            minView: "month",//设置只显示到月份
+            initialDate: new Date(),//初始化当前日期
+            autoclose: true,//选中自动关闭
+            todayBtn: true//显示今日按钮
+        });
     </script>
 </body>
 </html>

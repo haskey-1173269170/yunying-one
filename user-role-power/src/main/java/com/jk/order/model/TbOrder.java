@@ -19,6 +19,9 @@ public class TbOrder implements Serializable {
   private String receiver;
   private String username;
 
+  private String mintime;
+  private String maxtime;
+
 
   public String getOrderid() {
     return orderid;
@@ -56,7 +59,7 @@ public class TbOrder implements Serializable {
     return createtime;
   }
 
-  public void setCreatetiime(String createtime) {
+  public void setCreatetime(String createtime) {
     this.createtime = createtime;
   }
 
@@ -98,5 +101,21 @@ public class TbOrder implements Serializable {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getMintime() {
+    return mintime;
+  }
+
+  public void setMintime(String mintime) {
+    this.mintime = mintime;
+  }
+
+  public String getMaxtime() {
+    return maxtime;
+  }
+
+  public void setMaxtime(String maxtime) {
+    this.maxtime = maxtime;
   }
 }
