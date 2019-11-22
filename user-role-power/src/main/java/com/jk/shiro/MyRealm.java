@@ -24,18 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 〈一句话功能简述〉<br>
- * 〈test〉
- *
- * @author zyl
- * @create 2018/12/26
- * @since 1.0.0
- */
+ * @Description <用一句话描述这个方法>
+ * @Param
+ * @Return
+ * @Author liushuxin
+ * @Date 2019/11/22 16:04
+ **/
 public class MyRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
-/*    @Resource
-    private UserService userServcice;*/
+
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

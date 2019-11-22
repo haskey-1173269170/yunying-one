@@ -5,6 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.jk.commodity.mapper.CommodityMapper;
 import com.jk.commodity.model.*;
 import com.jk.image.model.Image;
+import com.jk.lsxutils.SolrUtil;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,10 @@ import java.util.Map;
 public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private CommodityMapper commodityMapper;
+    @Autowired
+    private SolrClient solrClient;
+    @Autowired
+    private SolrUtil solrUtil;
 
     @Override
     public Map<String, Object> queryCommodity(Integer page, Integer rows, Commodity commodity) {
@@ -36,10 +43,11 @@ public class CommodityServiceImpl implements CommodityService {
         map.put("rows",list);
         return map;
     }
-
+    /*下架*/
     @Override
     public void soldOut(Integer id) {
         commodityMapper.soldOut(id);
+        solrUtil.deletesolr(id);
     }
 
     @Override
@@ -53,15 +61,20 @@ public class CommodityServiceImpl implements CommodityService {
         map.put("rows",list);
         return map;
     }
-
+    /*上架*/
     @Override
     public void putaway(Integer id) {
         commodityMapper.putaway(id);
+        solrUtil.addSolr(id);
     }
 
     @Override
     public void deleteAll(String ids) {
         commodityMapper.deleteAll(ids);
+        String[] split = ids.split(",");
+        for (String s : split) {
+            solrUtil.deletesolr(Integer.valueOf(s));
+        }
     }
 
     @Override
@@ -128,7 +141,7 @@ public class CommodityServiceImpl implements CommodityService {
             list.add(c);
         }
         commodityMapper.addCommodityAndColor(list);
-
+        solrUtil.addSolr(commodity.getProductId());
     }
 
     @Override

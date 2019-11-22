@@ -159,4 +159,31 @@
 
         where tcd.productState = 1 and tcd.productId = #{id}
     </select>
-  </mapper>
+    <select id="querySolrGoodsByCommid" resultType="com.jk.commodity.model.SolrGoods" parameterType="int">
+        SELECT
+				c.productId id,
+				c.productName name,
+				c.productIntroduction description,
+				c.commodityPrice price,
+				co.productColor_name color,
+				co.productColor_img img,
+				c.numberOfCameras camera,
+				c.commoditySales sale,
+				o.operatingSystem_id systemId,
+				o.operatingSystem_name system,
+				c.timeToMarket time,
+				p.productBrand_id brandId,
+				p.productBrand_name brand,
+				ty.type_id typeId,
+				ty.type_name typename
+			FROM
+				t_commodity c
+			LEFT JOIN t_operatingsystem o ON c.operatingSystem = o.operatingSystem_id
+			LEFT JOIN t_productbrand p ON c.productBrand = p.productBrand_id
+			LEFT JOIN t_commodity_color cco ON c.productId = cco.commodityid
+			LEFT JOIN t_productcolor co ON cco.productColorid = co.productColor_id
+			LEFT JOIN t_type ty ON p.productBrand_typeId=ty.type_id
+			WHERE
+				c.productState = 1 and c.productId=#{productId} GROUP BY c.productId
+    </select>
+</mapper>
