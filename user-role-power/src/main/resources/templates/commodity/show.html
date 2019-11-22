@@ -36,7 +36,8 @@
     <link rel="stylesheet" href="../js/bootstrap-fileinput/css/fileinput.css">
 </head>
 <body>
-    <div id="toolbar" class="container">
+<h1 class="form-control" style="background: #00ca6d"><font color="#f0ffff">商品信息</font></h1>
+    <div id="toolbar1" class="container">
         <div class="form-inline">
         <div class="form-group">
             <label for="productName">商品名称</label>
@@ -44,8 +45,7 @@
         </div>
         <div class="form-group">
           <label for="startDate">上市时间</label>
-          <input type="text" name="startDate" id="startDate" class="form-control date" placeholder="开始时间" />
-          <input type="text" name="endDate" id="endDate" class="form-control date" placeholder="结束时间" />
+          <input type="text" name="startDate" id="startDate" class="form-control date" placeholder="开始时间" /> --- <input type="text" name="endDate" id="endDate" class="form-control date" placeholder="结束时间" />
         </div>
         <div class="form-group">
             <button onclick="searchCommodity()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
@@ -64,12 +64,12 @@
         function initTable(){
             //列表展示
             $('#commodityTable').bootstrapTable({
-            toolbar:'#toolbar',
+            toolbar:'#toolbar1',
             url:'../commodity/queryCommodity',//获取数据地址
             pagination:true, //是否展示分页
-            pageList:[2, 4, 20, 50],//分页组件
+            pageList:[2, 5, 10, 50],//分页组件
             pageNumber:1,
-            pageSize:4,//默认每页条数
+            pageSize:5,//默认每页条数
             //search:true,//是否显示搜索框
             //searchText:'试试',//初始化搜索文字
             showColumns:false,//是否显示 内容列下拉框
@@ -358,7 +358,7 @@
                             }
                         },
                         {field:'productColor_count',title:'库存',align:'center'},
-                        {field:'111',title:'操作',align:'center',
+                        {field:'111',title:'编辑库存',align:'center',
                             formatter:function(value,row,index){
                                 return '<button class="btn btn-link" onclick="zengCount('+ row.productColor_id +')" >+</button>' +
                                     '<button class="btn btn-link" onclick="jianCount('+ row.productColor_id +')" >-</button>';
