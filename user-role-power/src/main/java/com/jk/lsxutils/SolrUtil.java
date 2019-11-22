@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * @ClassName addSolr
- * @Deacription TODO
+ * @Deacription 该注解用与修改数据库时同步solr
  * @Author liushuxin
  * @Date 2019/11/22 15:18
  * @Version 1.0
@@ -22,6 +22,13 @@ public  class SolrUtil {
     private  CommodityMapper commodityMapper;
     @Autowired
     private  SolrClient solrClient;
+    /***
+     * @Description <solr新增>
+     * @Param [id]
+     * @Return void
+     * @Author liushuxin
+     * @Date 2019/11/22 17:27
+     **/
     public  void  addSolr(Integer id){
         SolrGoods goods = commodityMapper.querySolrGoodsByCommid(id);
         try {
@@ -48,6 +55,13 @@ public  class SolrUtil {
 
         }
     }
+    /**
+     * @Description <solr删除>
+     * @Param [id]
+     * @Return void
+     * @Author liushuxin
+     * @Date 2019/11/22 17:28
+     **/
     public void deletesolr(Integer id){
         try {
             solrClient.deleteById("core1",id.toString());

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @Description <用一句话描述这个方法>
+ * @Description <启动类>
  * @Param
  * @Return
  * @Author liushuxin
