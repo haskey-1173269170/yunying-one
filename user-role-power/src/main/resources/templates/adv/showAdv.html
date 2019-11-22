@@ -42,7 +42,7 @@
                 pagination:true, //是否展示分页
                 pageList:[2, 3, 6, 8],//分页组件
                 pageNumber:1,
-                pageSize:5,//默认每页条数
+                pageSize:3,//默认每页条数
                 search:true,//是否显示搜索框
                 //searchText:'',//初始化搜索文字
                 showColumns:false,//是否显示 内容列下拉框
@@ -66,12 +66,30 @@
                     {field:'advname',title:'广告主题',align:"center"},
                     {field:'advimg',title:'海报',align:"center",
                         formatter:function (value) {
-                            return "<img src='"+value+"' width='100px'>";
+                            return "<img src='"+value+"' width='110px' height='100px'>";
                         }
                     },
-                    {field:'advinfo',title:'广告简介',align:"center"},
+                    {field:'advinfo',title:'广告简介',align:"center",
+                            formatter:function(value){
+                                if(value.length>25){
+                                    return value.substr(0,25)+"……";
+                                }else{
+                                    return value;
+                                }
+                            }
+                    },
                     {field:'advdate',title:'发布时间',align:"center"},
                     {field:'advurl',title:'广告链接',align:"center"},
+                    {field:'advyn',title:'广告类型',align:"center",
+                            formatter:function(value){
+                                if(value==0){
+                                    return "页脚广告";
+                                }
+                                if(value==1){
+                                    return "首页轮播图";
+                                }
+                            }
+                    },
                     {field:'advstatus',title:'发布状态',align:"center",
                         formatter:function(value,row,index){
                             if(value==1){

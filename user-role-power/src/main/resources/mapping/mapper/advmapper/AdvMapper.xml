@@ -15,7 +15,7 @@
         delete from t_adv where advid = #{id}
     </delete>
     <insert id="addAdv">
-        insert into t_adv(advname,advimg,advstatus,advdate,advinfo,advurl) values(#{advname},#{advimg},1,sysdate(),#{advinfo},#{advurl})
+        insert into t_adv(advname,advimg,advstatus,advdate,advinfo,advurl,advyn) values(#{advname},#{advimg},1,sysdate(),#{advinfo},#{advurl},#{advyn})
     </insert>
     <update id="updateStatus">
         update t_adv set advstatus = #{info} where advid = #{advid}

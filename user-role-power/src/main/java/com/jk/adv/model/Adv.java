@@ -21,9 +21,18 @@ public class Adv implements Serializable {
     private String advdate;
     private String advinfo;
     private String advurl;
+    private String advyn;
 
     private String mindate;
     private String maxdate;
+
+    public String getAdvyn() {
+        return advyn;
+    }
+
+    public void setAdvyn(String advyn) {
+        this.advyn = advyn;
+    }
 
     public String getMindate() {
         return mindate;
