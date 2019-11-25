@@ -16,7 +16,7 @@ import java.util.Map;
 public interface UserMapper {
     Integer queryWebUserCount(WebUser webUser);
 
-    List<WebUser> queryWebUser(@Param("s") Integer start, @Param("r") int rows, @Param("w") WebUser webUser);
+    List<WebUser> queryWebUser(@Param("w") WebUser webUser);
 
     void deleteWebUserById(@Param("id") String id);
 
@@ -24,7 +24,7 @@ public interface UserMapper {
 
     void deleteWebUserRoleByUserId(Integer userId);
 
-    void addWebUserRole(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
+    void addWebUserRole(@Param("userId") Integer userId, @Param("roleId") Integer[] roleId);
 
     WebUser queryWebUserByName(String username);
 

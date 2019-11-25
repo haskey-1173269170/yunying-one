@@ -49,4 +49,8 @@ public interface CommodityMapper {
     void addCommodityAndColor(List<CommodityColor> list);
 
     Commodity xiangQing(Integer id);
+
+    SolrGoods querySolrGoodsByCommid(Integer productId);
+
+    List<Commodity> queryNotSoldCommodity2();
 }

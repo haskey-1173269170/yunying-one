@@ -4,4 +4,11 @@
     <select id="queryRole" resultType="com.jk.role.model.Role">
         select * from t_role
     </select>
+    <select id="queryRoleByUserId" resultType="java.lang.String" parameterType="int">
+
+    SELECT r.roleidean from t_role r
+        LEFT JOIN t_webuser_role wr ON r.id=wr.roleId
+        LEFT JOIN web_user w on wr.webuserid = w.userId
+        where w.userId=#{userid}
+    </select>
 </mapper>

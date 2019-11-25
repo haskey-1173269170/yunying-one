@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -43,5 +44,9 @@ public class AdvController {
     @ResponseBody
     public void updateStatus(Integer info,String advid){
         advService.updateStatus(info,advid);
+    }
+    @RequestMapping("export")
+    public void export(HttpServletResponse response){
+        advService.export(response);
     }
 }

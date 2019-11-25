@@ -5,9 +5,16 @@ import com.github.pagehelper.PageHelper;
 import com.jk.commodity.mapper.CommodityMapper;
 import com.jk.commodity.model.*;
 import com.jk.image.model.Image;
+import com.jk.lsxutils.ExportExcel;
+import com.jk.lsxutils.SolrUtil;
+import com.jk.order.model.TbOrder;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +31,10 @@ import java.util.Map;
 public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private CommodityMapper commodityMapper;
+    @Autowired
+    private SolrClient solrClient;
+    @Autowired
+    private SolrUtil solrUtil;
 
     @Override
     public Map<String, Object> queryCommodity(Integer page, Integer rows, Commodity commodity) {
@@ -36,10 +47,11 @@ public class CommodityServiceImpl implements CommodityService {
         map.put("rows",list);
         return map;
     }
-
+    /*下架*/
     @Override
     public void soldOut(Integer id) {
         commodityMapper.soldOut(id);
+        solrUtil.deletesolr(id);
     }
 
     @Override
@@ -53,15 +65,20 @@ public class CommodityServiceImpl implements CommodityService {
         map.put("rows",list);
         return map;
     }
-
+    /*上架*/
     @Override
     public void putaway(Integer id) {
         commodityMapper.putaway(id);
+        solrUtil.addSolr(id);
     }
 
     @Override
     public void deleteAll(String ids) {
         commodityMapper.deleteAll(ids);
+        String[] split = ids.split(",");
+        for (String s : split) {
+            solrUtil.deletesolr(Integer.valueOf(s));
+        }
     }
 
     @Override
@@ -128,12 +145,50 @@ public class CommodityServiceImpl implements CommodityService {
             list.add(c);
         }
         commodityMapper.addCommodityAndColor(list);
-
+        solrUtil.addSolr(commodity.getProductId());
     }
 
     @Override
     public Commodity xiangQing(Integer id) {
         return commodityMapper.xiangQing(id);
+    }
+
+    @Override
+    public void export(HttpServletResponse response, int page, int rows) {
+        List<Commodity> list= new ArrayList<Commodity>();
+
+        try {
+            Page<Commodity> objects = PageHelper.startPage(page, rows);
+            list = commodityMapper.queryNotSoldCommodity2();
+
+            //定义表格的标题
+            String title ="商品信息";
+            //定义列名
+            String[] rowName={"商品编号","商品名称","商品价格","入网型号","产地","上架时间","上市时间","分辨率","商品销量","品牌"};
+            //定义工具类要的数据
+            List<Object[]>  dataList = new ArrayList<Object[]>();
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            //循环数据把数据存放到 List<Object[]>
+            for (Commodity commodity1:list) {
+                Object[] obj=new Object[rowName.length];
+                obj[0]=commodity1.getProductId();
+                obj[1]=commodity1.getProductName();
+                obj[2]=commodity1.getCommodityPrice();
+                obj[3]=commodity1.getTheNetModel();
+                obj[4]=commodity1.getProductOriginname();
+                obj[5]=commodity1.getUpAndDownTime().toLocaleString();
+                obj[6]=commodity1.getTimeToMarket().toLocaleString();
+                obj[7]=commodity1.getResolutionRatio();
+                obj[8]=commodity1.getCommoditySales();
+                obj[9]=commodity1.getProductBrandname();
+                dataList.add(obj);
+            }
+            ExportExcel exportExcel=new ExportExcel(title,rowName,dataList,response);
+            exportExcel.export();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -3,6 +3,8 @@ package com.jk.role.controller;
 import com.jk.role.model.Role;
 
 import com.jk.role.service.RoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ public class RoleController {
 
     @RequestMapping("queryRole")
     @ResponseBody
+    @RequiresPermissions("setting:roleManger")
     public List<Role> queryRole() {
         List<Role> roles = roleService.queryRole();
         return roles;

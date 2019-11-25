@@ -3,12 +3,14 @@ package com.jk.user.controller;
 
 import com.jk.user.model.WebUser;
 import com.jk.user.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -33,20 +35,24 @@ public class UserController {
 
     @RequestMapping("deleteWebUserById")
     @ResponseBody
+    @RequiresPermissions("setting:userManger")
     public void deleteWebUserById(String id) {
         userService.deleteWebUserById(id);
     }
 
     @RequestMapping("queryRoleIdByUserId")
     @ResponseBody
+    @RequiresPermissions("setting:userManger")
     public Integer queryRoleIdByUserId(Integer userId) {
         return userService.queryRoleIdByUserId(userId);
     }
 
     @RequestMapping("updateroleidbyuserid")
     @ResponseBody
-    public void updateroleidbyuserid(Integer userId, Integer roleId) {
-        userService.updateroleidbyuserid(userId, roleId);
+    @RequiresPermissions("setting:userManger")
+    public void updateroleidbyuserid(Integer userId, Integer[] roleId) {
+
+       userService.updateroleidbyuserid(userId, roleId);
     }
     @RequestMapping("querArea")
     @ResponseBody
@@ -69,4 +75,9 @@ public class UserController {
     public String updatePwd(String oldpwd, String newpwd, HttpServletRequest request){
         return userService.updatePwd(oldpwd,newpwd,request);
     }
+    @RequestMapping("importWebUser")
+    public void importWebUser(HttpServletResponse response, int page, int rows){
+        userService.export(response,page,rows);
+    }
+
 }

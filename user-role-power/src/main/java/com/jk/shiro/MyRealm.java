@@ -9,8 +9,10 @@
 package com.jk.shiro;
 
 
+import com.jk.role.service.RoleService;
 import com.jk.user.model.WebUser;
 import com.jk.user.service.UserService;
+import jdk.nashorn.internal.runtime.arrays.IteratorAction;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -24,18 +26,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 〈一句话功能简述〉<br>
- * 〈test〉
- *
- * @author zyl
- * @create 2018/12/26
- * @since 1.0.0
- */
+ * @Description <用一句话描述这个方法>
+ * @Param
+ * @Return
+ * @Author liushuxin
+ * @Date 2019/11/22 16:04
+ **/
 public class MyRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
-/*    @Resource
-    private UserService userServcice;*/
+    @Autowired
+    private RoleService roleService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -46,6 +47,10 @@ public class MyRealm extends AuthorizingRealm {
         List<String> stringList = userService.queryidentByUserId(webUser.getUserid());
         for (String s : stringList) {
             info.addStringPermission(s);
+        }
+        List<String> roleList =  roleService.queryRoleByUserId(webUser.getUserid());
+        for (String s : roleList) {
+            info.addRole(s);
         }
         return info;
     }

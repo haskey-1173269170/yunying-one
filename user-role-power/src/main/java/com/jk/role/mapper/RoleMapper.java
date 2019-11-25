@@ -14,4 +14,6 @@ import java.util.List;
  **/
 public interface RoleMapper {
     List<Role> queryRole();
+
+    List<String> queryRoleByUserId(Integer userid);
 }

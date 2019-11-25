@@ -50,6 +50,7 @@
         <div class="form-group">
             <button onclick="searchCommodity()" class="btn btn-primary glyphicon glyphicon-search">搜索</button>
         </div>
+            <a href="javaScript:importCommodity()" class="btn btn-info glyphicon glyphicon-download">导出商品</a>
     </div>
     </div>
     <button onclick="notSold()" class="btn btn-primary glyphicon glyphicon-eye-close"> 未上架商品</button>
@@ -443,6 +444,11 @@
             autoclose: true,//选中自动关闭
             todayBtn: true//显示今日按钮
         });
+        function importCommodity() {
+            var page = $('#commodityTable').bootstrapTable('getOptions').pageNumber;
+            var rows = $('#commodityTable').bootstrapTable('getOptions').pageSize;
+            location.href="../commodity/export?page="+page+"&rows="+rows;
+        }
     </script>
 </body>
 </html>

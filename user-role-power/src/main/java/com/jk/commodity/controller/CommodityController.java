@@ -5,12 +5,10 @@ import com.jk.commodity.service.CommodityService;
 import com.jk.image.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +47,7 @@ public class CommodityController {
     @ResponseBody
     public void putaway(Integer id){
         commodityService.putaway(id);
+
     }
     @RequestMapping("deleteAll")
     @ResponseBody
@@ -150,5 +149,9 @@ public class CommodityController {
     @RequestMapping("toXiangQing")
     public String toXiangQing(){
         return "commodity/xiangQing";
+    }
+    @RequestMapping("export")
+    public void export(HttpServletResponse response,int page,int rows){
+        commodityService.export(response,page,rows);
     }
 }
