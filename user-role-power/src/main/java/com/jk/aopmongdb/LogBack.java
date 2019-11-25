@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @Date 2019/11/22 20:02
  * @Version 1.0
  **/
-@Document(collation = "adminLog")
+@Document
 public class LogBack {
     @Id
     private String id;
@@ -19,6 +19,15 @@ public class LogBack {
     private String parmes;
     private String rvalue;
     private String exception;
+    private String thisDate;
+
+    public String getThisDate() {
+        return thisDate;
+    }
+
+    public void setThisDate(String thisDate) {
+        this.thisDate = thisDate;
+    }
 
     public String getId() {
         return id;

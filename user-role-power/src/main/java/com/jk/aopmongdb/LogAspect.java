@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @ClassName LogAspect
@@ -40,7 +42,8 @@ public class LogAspect{
         if(result!=null){
             logBack.setRvalue(result.toString());
         }
-
+        logBack.setThisDate(new Date().toString());
+        System.err.println(logBack.getThisDate());
         mongoTemplate.save(logBack);
     }
 }
