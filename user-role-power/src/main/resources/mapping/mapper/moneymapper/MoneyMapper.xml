@@ -4,16 +4,61 @@
 
 
     <select id="querynewordercount" resultType="java.lang.Integer">
-       select count(*)  from t_order where DATE_FORMAT(createtime,"%Y-%m-%d") = DATE_FORMAT(SYSDATE(),"%Y-%m-%d") and status &lt;&gt; 2
+       select count(*)  from t_order where YEARWEEK(date_format(createtime,'%Y-%m-%d')) = YEARWEEK(now())-1
+
     </select>
     <select id="queryoverordercount" resultType="java.lang.Integer">
         select count(*)  from t_order where status = 1
+        AND  YEARWEEK(date_format(createtime,'%Y-%m-%d')) = YEARWEEK(now())-1
     </select>
     <select id="queryfailordercount" resultType="java.lang.Integer">
         select count(*)  from t_order where status = 2
+        AND  YEARWEEK(date_format(createtime,'%Y-%m-%d')) = YEARWEEK(now())-1
     </select>
     <select id="querynewregusercount" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            cms_user
+        WHERE
+            PERIOD_DIFF(
+                date_format(now(), '%Y%m'),
+                date_format(cmsUserDate, '%Y%m')
+            ) = 1
+    </select>
 
-        select count(*) from cms_user where DATE_FORMAT(cmsUserDate,"%Y-%m") = DATE_FORMAT(SYSDATE(),"%Y-%m")
+    <select id="queryDiagram" resultType="java.util.Map">
+        SELECT
+            count(1) AS y,
+            CASE t. STATUS
+        WHEN 0 THEN
+            '未支付'
+        WHEN 1 THEN
+            '待支付'
+        ELSE
+            '支付'
+        END AS name
+        FROM
+            T_ORDER t
+        WHERE
+            date_format(createtime, '%Y-%m') = date_format(
+                DATE_SUB(curdate(), INTERVAL 1 MONTH),
+                '%Y-%m'
+            )
+        GROUP BY
+            t. STATUS
+    </select>
+
+    <select id="queryCommdityAnaysis" resultType="java.util.Map">
+        SELECT
+            count(tc.productId) cou,
+            tp.productBrand_typeId id
+        FROM
+            t_commodity tc,
+            t_productbrand tp
+        WHERE
+            tc.productBrand=tp.productBrand_id
+        GROUP BY
+            tp.productBrand_typeId
     </select>
 </mapper>

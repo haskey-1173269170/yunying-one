@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-table/bootstrap-table.css">
+    <script src="../js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+</head>
+<body>
+
+
+<table class="table" id="myTable" ></table>
+<script>
+    $(function(){
+        initData()
+    })
+
+    function initData(){
+        $('#myTable').bootstrapTable({
+            toolbar:'#toolbar',
+            url:'../cms/queryNewCmsUser',//获取数据地址
+            pagination:true, //是否展示分页
+            pageList:[1, 5, 8],//分页组件
+            pageNumber:1,
+            pageSize:1,//默认每页条数
+            //search:true,//是否显示搜索框
+            //searchText:'',//初始化搜索文字
+            showColumns:false,//是否显示 内容列下拉框
+            //showToggle:true,//是否显示 切换试图（table/card）按钮
+            showPaginationSwitch:false,//是否显示 数据条数选择框
+            showRefresh:false,//是否显示刷新按钮
+            detailView:false,//设置为 true 可以显示详细页面模式。
+            showFooter:false,//是否显示列脚
+            clickToSelect: true, //是否启用点击选中行
+            sidePagination:'client',//分页方式：client客户端分页，server服务端分页（*
+            striped:true,
+            columns:[
+                [
+                    {field:'2',align:"center",checkbox:true},
+                    {field:'cmsUserId',title:'编号',align:"center"},
+                    {field:'cmsUserPhone',title:'手机号',align:"center"},
+                    {field:'cmsUserName',title:'用户名',align:"center"},
+                    {field:'cmsUserDate',title:'注册日期',align:"center",
+                        formatter:function(value,row,index){
+                            return value.substring(0,10)
+                        }
+                    }
+                ]
+            ]
+        })
+
+    }
+</script>
+</body>
+</html>

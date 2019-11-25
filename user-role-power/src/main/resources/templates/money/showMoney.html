@@ -4,6 +4,13 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <script src="../highcharts/code/highcharts.js"></script>
+    <script src="../highcharts/code/modules/exporting.js"></script>
+    <script src="../highcharts/code/modules/export-data.js"></script>
+
+
     <title>后台管理系统</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
@@ -13,13 +20,15 @@
     <link rel="stylesheet" href="../css/style.css">
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/bootstrap/bootstrap-bootbox/bootbox.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
 
 <!-- 内容区域 -->
 
-
+<!-- hightCharts数据分析 -->
+<div id="container" style="min-width:400px;height:400px"></div>
 <!-- 内容头部 -->
 <section class="content-header">
     <h1>
@@ -35,35 +44,6 @@
 <section class="content">
     <!-- 统计数值 -->
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3 ><span id="neworderid">0</span></h3>
-
-                    <p>新订单</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-                <a href="all-order-manage-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3><span id="overorder"></span></h3>
-
-                    <p>已成交订单</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="all-ad-statistics-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
@@ -71,30 +51,31 @@
                 <div class="inner">
                     <h3><span id="failorder"></span></h3>
 
-                    <p>支付失败订单</p>
+                    <p>上周已成交订单</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="all-member-manage-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="javascript:newOrederDetails()" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-red">
+            <div class="small-box bg-green">
                 <div class="inner">
                     <h3><span id="newreguser"></span></h3>
-                    <p>新注册用户</p>
+                    <p>上月新注册用户</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="all-ad-statistics-list.html" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="javascript:queryNewCmsUser()" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
     </div>
+
     <!-- /.row -->
 </section>
 <!-- 正文区域 /-->
@@ -107,6 +88,7 @@
             queryoverordercount();
             queryfailordercount();
             querynewregusercount();
+            initDiagram();
         })
         
         function querynewordercount() {
@@ -117,6 +99,7 @@
                 }
             })
         }   
+        
         function queryoverordercount() {
             $.ajax({
                 url:"../money/queryoverordercount",
@@ -125,6 +108,7 @@
                 }
             })
         }
+        
         function queryfailordercount() {
             $.ajax({
                 url:"../money/queryfailordercount",
@@ -133,12 +117,82 @@
                 }
             })
         }
+        
         function querynewregusercount() {
             $.ajax({
                 url:"../money/querynewregusercount",
                 success:function (data) {
                     $("#newreguser").html(data);
                 }
+            })
+        }
+        
+        function initDiagram(){
+            $.ajax({
+                url:"../money/queryDiagram",
+                success:function (data) {
+                    Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: new Date().getFullYear()+"年"+new Date().getMonth()+'月数据'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                    style: {
+                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                    }
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Brands',
+                            colorByPoint: true,
+                            data:data
+                        }]
+                    });
+                }
+            })
+        }
+
+        <!--查询上周订单数据-->
+        function newOrederDetails() {
+            bootbox.dialog({
+                title:'上周订单信息',
+                message:createAddContent("../orderPage/toDialogPage"),
+                closeButton:true
+            })
+        }
+            var res;
+        function createAddContent(url) {
+                $.ajax({
+                    url:url,
+                    async:false,
+                    success:function (data) {
+                        res = data;
+                    }
+                })
+                return res;
+            }
+
+        <!--查询上月薪注册用户-->
+        function queryNewCmsUser(){
+            bootbox.dialog({
+                title:'上月新用户注册',
+                message:createAddContent("../toCms/toNewCmsUser"),
+                closeButton:true
             })
         }
     </script>

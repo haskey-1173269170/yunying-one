@@ -49,4 +49,10 @@ public class OrderController {
     public List<TOrderinfo> queryOrderInfoByOrderId(String orderid){//根据订单查询详情
          return orderService.queryOrderInfoByOrderId(orderid);
     }
+
+    @RequestMapping("queryNewOrder")
+    @ResponseBody
+    public List  queryNewOrder(){
+        return orderService.queryNewOrder();
+    }
 }

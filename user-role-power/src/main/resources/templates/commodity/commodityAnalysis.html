@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../highcharts/code/highcharts.js"></script>
+    <script src="../highcharts/code/modules/exporting.js"></script>
+    <script src="../highcharts/code/modules/export-data.js"></script>
+</head>
+<body>
+    <div id="container" style="min-width:400px;height:400px"></div>
+    <script>
+        $(function(){
+            $.ajax({
+                url:"../money/queryCommdityAnaysis",
+                dataType:"json",
+                success:function (data) {
+                    Highcharts.chart('container',{
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: '销售个数'
+                        },
+                        xAxis: {
+                            categories: [
+                                '商品数量'
+                            ],
+                            crosshair: true
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: '单位(个)'
+                            }
+                        },
+                        tooltip: {
+                            // head + 每个 point + footer 拼接成完整的 table
+                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.1f} 个</b></td></tr>',
+                            footerFormat: '</table>',
+                            shared: true,
+                            useHTML: true
+                        },
+                        plotOptions: {
+                            column: {
+                                borderWidth: 0
+                            }
+                        },
+                        series: data
+                    });
+                }
+            })
+        })
+    </script>
+</body>
+</html>

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @version 1.0
  * @ClassName MoneyController
@@ -39,4 +42,17 @@ public class MoneyController {
     public Integer querynewregusercount(){
        return  moneyService.querynewregusercount();
     }
+
+    @RequestMapping("queryDiagram")
+    @ResponseBody
+    public List<Map<String,Object>> queryDiagram(){
+        return moneyService.queryDiagram();
+    }
+
+    @RequestMapping("queryCommdityAnaysis")
+    @ResponseBody
+    public List<Map<String,Object>> queryCommdityAnaysis(){
+        return moneyService.queryCommdityAnaysis();
+    }
+
 }

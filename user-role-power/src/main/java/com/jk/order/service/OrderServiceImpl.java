@@ -77,4 +77,9 @@ public class OrderServiceImpl implements  OrderService{
     public List<TOrderinfo> queryOrderInfoByOrderId(String orderid) {
         return orderMapper.queryOrderInfoByOrderId(orderid);
     }
+
+    @Override
+    public List queryNewOrder() {
+        return orderMapper.queryNewOrder();
+    }
 }

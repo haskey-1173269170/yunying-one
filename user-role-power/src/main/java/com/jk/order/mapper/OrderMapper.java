@@ -23,4 +23,6 @@ public interface OrderMapper {
     void deleteOrderInfo(String[] id);
 
     List<TOrderinfo> queryOrderInfoByOrderId(String orderid);
+
+    List queryNewOrder();
 }

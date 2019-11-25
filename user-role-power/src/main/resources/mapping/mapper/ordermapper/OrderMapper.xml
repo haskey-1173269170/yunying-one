@@ -32,4 +32,34 @@
     <select id="queryOrderInfoByOrderId" resultType="com.jk.order.model.TOrderinfo">
         select  *  from t_order o,t_orderinfo oi,t_commodity c where oi.orderinfooid = o.orderid and c.productId =  oi.orderinfopid and o.orderid = #{orderid}
     </select>
+    <select id="queryNewOrder" resultType="java.util.Map">
+       SELECT
+            tco.productName productName,
+            tco.productIntroduction productInfo,
+            tco.commodityPrice commodityPrice,
+            tco.homeScreenSize ,
+            tco.hotspot,
+            ttp.type_name,
+            count(tco.productId) count
+        FROM
+            t_order t,
+            t_orderinfo too,
+            t_commodity tco,
+            t_productbrand tpr,
+            t_type ttp
+        WHERE
+            t.orderid=too.orderinfooid
+        AND
+            too.orderinfopid=tco.productId
+        AND
+            tco.productBrand=tpr.productBrand_id
+        AND
+            tpr.productBrand_typeId=ttp.type_id
+        AND
+            YEARWEEK(
+                date_format(createtime, '%Y-%m-%d')
+            ) = YEARWEEK(now()) - 1
+        GROUP BY
+            tco.productId
+    </select>
 </mapper>
