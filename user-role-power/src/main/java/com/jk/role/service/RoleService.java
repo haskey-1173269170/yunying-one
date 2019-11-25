@@ -14,4 +14,6 @@ import java.util.List;
  **/
 public interface RoleService {
     List<Role> queryRole();
+
+    List<String> queryRoleByUserId(Integer userid);
 }

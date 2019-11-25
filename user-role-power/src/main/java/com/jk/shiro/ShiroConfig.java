@@ -56,7 +56,6 @@ public class ShiroConfig {
      */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
-        System.out.println("ShiroConfiguration.shirFilter()");
         // shiro过滤器工厂
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager 如果不设置就无法完成认证和授权
@@ -87,6 +86,7 @@ public class ShiroConfig {
         // 浏览器访问的地址栏路径中以/logout结尾的路径 走logout过滤器
         // logout会清除session 退出登录
         filterChainDefinitionMap.put("/logout", "logout");
+
         /// **代表所有路径 除以上路径外都拦截 authc代表权限拦截过滤器
         filterChainDefinitionMap.put("/**", "authc");
         // perms权限过滤器 必须拥有某项权限才能访问对应路径
@@ -99,6 +99,7 @@ public class ShiroConfig {
         // 最终返回过滤器链
         return shiroFilterFactoryBean;
     }
+
 
     @Bean // 在xml文件中配置一个bean标签 相当于<bean class="
     // org.apache.shiro.mgt.SecurityManager"

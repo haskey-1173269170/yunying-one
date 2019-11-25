@@ -4,6 +4,7 @@ package com.jk.user.service;
 import com.jk.user.model.WebUser;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public interface UserService {
      * @Date 2019/11/22 16:13
      **/
 
-    void updateroleidbyuserid(Integer userId, Integer roleId);
+    void updateroleidbyuserid(Integer userId, Integer[] roleId);
     /**
      * @Description <登录查询>
      * @Param [username]
@@ -106,4 +107,6 @@ public interface UserService {
      * @Date 2019/11/22 16:14
      **/
     void addWebUser(WebUser webUser);
+
+    void export(HttpServletResponse response, int page, int rows);
 }

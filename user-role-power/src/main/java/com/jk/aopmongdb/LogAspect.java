@@ -32,15 +32,15 @@ public class LogAspect{
 
         logBack.setMethod(joinPoint.getSignature().getName());
         Object[] args = joinPoint.getArgs();
-        StringBuffer stringBuffer = new StringBuffer();
+        String parmes="";
         for (int i = 0; i < args.length; i++) {
-            if (stringBuffer==null){
-                stringBuffer.append(args[i]);
-            }
-            stringBuffer.append(args[i]+",");
+            parmes+=parmes.equals("")?args[i]:","+args[i];
         }
-        logBack.setParmes(stringBuffer.toString());
-        logBack.setRvalue(result.toString());
+        logBack.setParmes(parmes);
+        if(result!=null){
+            logBack.setRvalue(result.toString());
+        }
+
         mongoTemplate.save(logBack);
     }
 }

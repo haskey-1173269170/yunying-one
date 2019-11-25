@@ -33,6 +33,7 @@
         <input id="enddateid" type="text" class="form-control date"></input>
     </div>
     <a href="javaScript:serachUser()" class="btn btn-default">搜索</a>
+    <a href="javaScript:importWebUser()" class="btn btn-info glyphicon glyphicon-download">导出用户</a>
 </div>
 
 
@@ -92,7 +93,7 @@
                     }
                 },
                 {field: 'area', title: '地区'},
-                {field: 'rname', title: '角色', width: 100},
+                {field: 'rname', title: '角色'},
                 {
                     field: '1', title: '操作', width: 120,
                     formatter: function (value, row, index) {
@@ -176,8 +177,8 @@
                     "callback": function () {
                         var roleId = $("#roleSelectId").val()
                         $.ajax({
-                            url: "../user/updateroleidbyuserid",
-                            data: {"userId": id, "roleId": roleId},
+                            url: "../user/updateroleidbyuserid?roleId="+roleId,
+                            data: {"userId":id},
                             success: function () {
                                 serachUser();
                             }
@@ -204,6 +205,11 @@
             }
         });
         return res;
+    }
+    function importWebUser() {
+        var page = $('#myTable').bootstrapTable('getOptions').pageNumber;
+        var rows = $('#myTable').bootstrapTable('getOptions').pageSize;
+        location.href="../user/importWebUser?page="+page+"&rows="+rows;
     }
 </script>
 </body>

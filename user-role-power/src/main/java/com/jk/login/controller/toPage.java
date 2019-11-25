@@ -30,11 +30,13 @@ public class toPage {
     }
 
     @RequestMapping("toshouRoleSelect")
+    @RequiresPermissions("setting:roleManger")
     public String shouRoleSelect() {
         return "user/setRolebyUserId";
     }
 
     @RequestMapping("toqueryRole")
+    @RequiresPermissions("setting:roleManger")
     public String toqueryRole() {
         return "role/showRole";
     }
@@ -51,4 +53,9 @@ public class toPage {
     public String toupdatepwd(){
         return "user/updatepwd";
     }
+    @RequestMapping("403")
+    public String to403(){
+        return "403";
+    }
+
 }

@@ -2,6 +2,7 @@ package com.jk.adv.service;
 
 import com.jk.adv.model.Adv;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface AdvService {
     void addAdv(Adv adv);
 
     void updateStatus(Integer info, String advid);
+
+    void export(HttpServletResponse response);
 }

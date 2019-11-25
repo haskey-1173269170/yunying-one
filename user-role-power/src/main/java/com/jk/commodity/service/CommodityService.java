@@ -3,6 +3,7 @@ package com.jk.commodity.service;
 import com.jk.commodity.model.*;
 import com.jk.image.model.Image;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -140,4 +141,6 @@ public interface CommodityService {
     * @Date: 2019/11/21 16:08
     */
     Commodity xiangQing(Integer id);
+
+    void export(HttpServletResponse response, int page, int rows);
 }

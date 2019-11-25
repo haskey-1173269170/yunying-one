@@ -3,6 +3,7 @@ package com.jk.order.service;
 import com.jk.order.model.TOrderinfo;
 import com.jk.order.model.TbOrder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -20,4 +21,6 @@ public interface OrderService {
     void delOrderByIds(String[] id);
 
     List<TOrderinfo> queryOrderInfoByOrderId(String orderid);
+
+    void export(HttpServletResponse response, Integer page, Integer rows, TbOrder order);
 }

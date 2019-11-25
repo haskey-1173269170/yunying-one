@@ -51,4 +51,6 @@ public interface CommodityMapper {
     Commodity xiangQing(Integer id);
 
     SolrGoods querySolrGoodsByCommid(Integer productId);
+
+    List<Commodity> queryNotSoldCommodity2();
 }

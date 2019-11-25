@@ -186,4 +186,22 @@
 			WHERE
 				c.productState = 1 and c.productId=#{productId} GROUP BY c.productId
     </select>
+    <select id="queryNotSoldCommodity2" resultType="com.jk.commodity.model.Commodity">
+        select tcd.*,tpd.productVersion_name productVersionname,tpc.productCpu_name productCpuname,
+        tpr.productOrigin_name productOriginname,tpb.productBrand_name productBrandname,tos.operatingSystem_name operatingSystemName
+
+        from t_commodity tcd
+
+        LEFT JOIN t_productversion tpd on tcd.productVersionid = tpd.productVersion_id
+
+        LEFT JOIN t_productcpu tpc on tcd.productCpuId = tpc.productCpu_id
+
+        LEFT JOIN t_productorigin tpr on tcd.productOriginId = tpr.productOrigin_id
+
+        LEFT JOIN t_productbrand tpb on tcd.productBrand = tpb.productBrand_id
+
+        LEFT JOIN t_operatingsystem tos on tcd.operatingSystem = tos.operatingSystem_id
+
+        where tcd.productState = 1
+    </select>
 </mapper>
