@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="com.jk.cmsuser.mapper.CmsMapper" >
+      <select id="queryCms" resultType="com.jk.cmsuser.model.CmsUser">
+          	SELECT
+                count(1) count,
+				cmsUserDate cmsUserDate
+            FROM
+                cms_user
+            WHERE
+                date_format(cmsUserDate,'%y-%m')=date_format(date_sub(curdate(), interval 1 month),'%y-%m')
+            GROUP BY
+                DATE_FORMAT(cmsUserDate,'%Y%m%d')
+      </select>
+
+    <select id="queryNewCmsUser" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            cms_user
+        WHERE
+            PERIOD_DIFF(
+                date_format(now(), '%Y%m'),
+                date_format(cmsUserDate, '%Y%m')
+            ) = 1
+    </select>
+</mapper>

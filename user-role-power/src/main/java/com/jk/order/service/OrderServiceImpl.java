@@ -51,6 +51,7 @@ public class OrderServiceImpl implements  OrderService{
     public void delOrderByIds(String[] id) {
         String key = PublicCacheutils.CACHE_ORDER;
         orderMapper.delOrderByIds(id);
+        redisTemplate.delete(key);
         orderMapper.deleteOrderInfo(id);
     }
 
@@ -100,5 +101,10 @@ public class OrderServiceImpl implements  OrderService{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List queryNewOrder() {
+        return orderMapper.queryNewOrder();
     }
 }

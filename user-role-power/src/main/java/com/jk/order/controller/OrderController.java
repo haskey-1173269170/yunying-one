@@ -68,4 +68,10 @@ public class OrderController {
     public void export(HttpServletResponse response,Integer page, Integer rows, TbOrder order){
         orderService.export(response,page,rows,order);
     }
+
+    @RequestMapping("queryNewOrder")
+    @ResponseBody
+    public List  queryNewOrder(){
+        return orderService.queryNewOrder();
+    }
 }

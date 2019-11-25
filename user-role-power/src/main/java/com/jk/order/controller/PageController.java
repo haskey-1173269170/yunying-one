@@ -21,19 +21,27 @@ import java.util.List;
 public class PageController {
     @Autowired
     private OrderService orderService;
+
     @RequestMapping("toShowOrder")
     public String toShowOrder(){
         return "order/showOrder";
     }
+
     @RequestMapping("toindex")
     public String toindex(){
         return "index";
     }
+
     @RequestMapping("toShowOrderInfo")
     public String toShowOrderInfo(String orderid, Model model){
         model.addAttribute("orderid",orderid);
         List<TOrderinfo> tOrderinfoList = orderService.queryOrderInfoByOrderId(orderid);
         model.addAttribute("list",tOrderinfoList);
         return "order/showOrderInfo";
+    }
+
+    @RequestMapping("toDialogPage")
+    public String  toDialogPage(){
+        return "order/orderDialog";
     }
 }

@@ -23,4 +23,12 @@ public interface OrderService {
     List<TOrderinfo> queryOrderInfoByOrderId(String orderid);
 
     void export(HttpServletResponse response, Integer page, Integer rows, TbOrder order);
+
+    /** @Author 原国庆
+     * @Description:查询上周新订单
+     * @Param: []
+     * @Return: java.util.List
+     * @Create: 2019/11/24 16:58
+     */
+    List queryNewOrder();
 }

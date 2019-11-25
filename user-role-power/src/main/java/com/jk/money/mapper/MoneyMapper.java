@@ -1,5 +1,8 @@
 package com.jk.money.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @version 1.0
  * @ClassName MoneyMapper
@@ -16,4 +19,8 @@ public interface MoneyMapper {
     Integer queryfailordercount();
 
     Integer querynewregusercount();
+
+    List queryDiagram();
+
+    List<Map<String, Object>> queryCommdityAnaysis();
 }

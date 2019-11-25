@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 2019/11/22 9:43
  **/
 @Controller
-@RequestMapping("money")
+@RequestMapping("moneyPage")
 public class MoneyPageController {
     @RequestMapping("toShowMoney")
     public String toShowMoney(){
         return "money/showMoney";
+    }
+
+    @RequestMapping("toCommodityAnalysis")
+    public String toCommodityAnalysis(){
+        return "commodity/commodityAnalysis";
     }
 }
