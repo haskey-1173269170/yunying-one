@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>流量分析</title>
+    <title>订单列表展示</title>
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- bootstrap -->
     <link rel="stylesheet" href="../plugins/bootstrap/bootstrap3/css/bootstrap.css"/>
@@ -27,46 +27,44 @@
     <script src="../plugins/bootstrap/bootstrap-fileinput/js/fileinput.js"></script>
     <script src="../plugins/bootstrap/bootstrap-fileinput/js/locales/zh.js"></script>
     <link rel="stylesheet" href="../plugins/bootstrap/bootstrap-fileinput/css/fileinput.css">
-
 </head>
-<body>
-<h1  class="form-control" style="background: #00ca6d"><font color="#ffebcd">购物中心页面请求详细</font></h1>
-<form class="form-inline">
-    <div class="form-group" style="margin-left: 10px">
-        <input type="text" class="form-control" id="Fluxid" placeholder="请输入评论内容">
-    </div>
-    <div class="form-group"  style="margin-left: 50px">
-        <label for="startDate">下单时间</label>
-        <input type="text" class="form-control date" id="startDate" name="startDate" placeholder="起始时间">
-        --
-        <input type="text" class="form-control date" id="endDate" name="endDate" placeholder="结束时间">
-    </div>
-    <button type="button" onclick="queryCommentWhere()" class="btn btn-danger glyphicon glyphicon-search"></button></div>
-    <div class="form-group">
-        <div class="form-group" style="margin-left: 402px">
-            <button type="button" onclick="delFlux()" class="btn btn-danger glyphicon glyphicon-minus">批量删除</button></div>
-            <button type="button" onclick="toAddFlux()" class="btn btn-add glyphicon glyphicon-minus">新增日志</button></div>
-</form>
+<body><h3 align="center">六脉，为你而生</h3>
 
+    <form class="form-inline">
+        <div class="form-group" style="margin-left: 10px">
+            <input type="text" class="form-control" id="Commentid" placeholder="请输入评论内容">
+        </div>
+        <div class="form-group"  style="margin-left: 50px">
+            <label for="startDate">下单时间</label>
+            <input type="text" class="form-control date" id="startDate" name="startDate" placeholder="起始时间">
+            --
+            <input type="text" class="form-control date" id="endDate" name="endDate" placeholder="结束时间">
+        </div>
+        <div class="form-group">
+        <button type="button" onclick="queryCommentWhere()" class="btn btn-danger glyphicon glyphicon-search"></button></div>
+        <div class="form-group" style="margin-left: 402px">
+        <button type="button" onclick="delComment()" class="btn btn-danger glyphicon glyphicon-minus">批量删除</button></div>
+        <button type="button" onclick="toAddComment()" class="btn btn-add glyphicon glyphicon-minus">新增评论</button></div>
+        <a href="javaScript:importComment()" class="btn btn-info glyphicon glyphicon-download">导出订单</a>
+    </form>
     <table class="table" id="myTable"></table>
     <script>
-        $(function () {
-            initTable();
+        $(function(){
+            initQueryComment();
         })
-
         function queryCommentWhere(){
             $('#myTable').bootstrapTable("refresh");
         }
-        function initTable(){
+        function  initQueryComment(){
             //列表展示
             $('#myTable').bootstrapTable({
                 toolbar:'#toolbar',
-                url:'../flux/queryFluxList',//获取数据地址
+                url:'../talk/queryComment',//获取数据地址
                 pagination:true, //是否展示分页
-                pageList:[2, 3, 6, 8],//分页组件
+                pageList:[5, 8, 15],//分页组件
                 pageNumber:1,
-                pageSize:5,//默认每页条数
-                search:false,//是否显示搜索框
+                pageSize:8,//默认每页条数
+                //search:true,//是否显示搜索框
                 //searchText:'',//初始化搜索文字
                 showColumns:false,//是否显示 内容列下拉框
                 //showToggle:true,//是否显示 切换试图（table/card）按钮
@@ -75,10 +73,11 @@
                 detailView:false,//设置为 true 可以显示详细页面模式。
                 showFooter:false,//是否显示列脚
                 clickToSelect: true, //是否启用点击选中行
-                sidePagination:'client',//分页方式：client客户端分页，server服务端分页（*
+                sidePagination:'server',//分页方式：client客户端分页，server服务端分页（*
                 striped:true,
                 queryParams:function(){
                     return{
+                        talkid:$("#talkid").val(),
                         startDate:$("#startDate").val(),
                         endDate:$("#endDate").val(),
                         page:this.pageNumber,
@@ -87,48 +86,35 @@
                 },
                 columns:[
                     {field:'2',align:"center",checkbox:true},
-                    {field:'id',title:'请求编号',align:"center"},
-                    {field:'method',title:'请求名称',align:"center"},
-                    {field:'parmes',title:'参数',align:"center"},
-                    {field:'rvalue',title:'返回值',align:"center"},
-                    {field:'exception',title:'异常',align:"center"},
-                    {field:'thisDate',title:'请求时间',align:"center",
-                        formatter:function (value) {
-                            if(value!=null){
-                                return new Date(value).toLocaleString().substring(0,10);
-                            }else{
-                                return "暂无";
-                            }
-                        }
+                    {field:'talkid',title:'评论id',align:"center"},
+                    {field:'talkinfo',title:'评论内容',align:"center"
+
                     },
-                    {field:'exception',title:'操作',align:"center",
+                    {field:'talkuserid',title:'评论用户',align:"center" },
+                    {field:'talkproductid',title:'评论商品id',align:"center"},
+                    {field:'talktime',title:'评论时间',align:"center",
+                    formatter:function(value,row,index){
+                        return new Date(value).toLocaleString().substr(0,9);
+                    }},
+                    {field:'caozuo',title:'操作',align:"center",
                         formatter:function(value,row,index){
-                            return "<button class='btn  btn-link ' 	onclick='queryFluxById(\""+row.id+"\")'>查看详情</button>";
-                        }}
+                            return "<button class='btn  btn-link ' 	onclick='queryCommentById(\""+row.talkid+"\")'>查看详情</button>";
+                        }
+                    }
                 ]
             })
         }
-
         //弹出框
-        function queryFluxById(id){
+        function queryCommentById(talkid){
             bootbox.dialog({
                 title: "查看详情",
-                message: createAddContent("../flux/toShowFluxInfo?id="+id),
+                message: createAddContent("../comment/toShowCommentInfo?talkid="+talkid),
                 closeButton: true,
                 buttons: {
                     "success": {
                         "label": "<i class='icon-ok'></i>确认",
                         "className": "btn btn-success",
-                        "callback":function(){
-                            $.ajax({
-                                url:"../flux/saveFluxList",
-                                type:"post",
-                                data:$("#saveFluxForm").serialize(),
-                                success:function(){
-                                    $('#myTable').bootstrapTable("refresh");
-                                }
-                            })
-                        }
+                        "callback":function(){}
                     },
                     "cancel": {
                         "label": "<i class='icon-info'></i>取消",
@@ -138,21 +124,20 @@
                 }
             });
         }
-        function toAddFlux(){
+        function toAddComment(){
             bootbox.dialog({
-                title: "请求新增",
-                message: createAddContent("../flux/toAdd"),
+                title: "评论新增",
+                message: createAddContent("../comment/toAddComment"),
                 closeButton: true,
-                wheat:900,
                 buttons: {
                     "success": {
                         "label": "<i class='icon-ok'></i>确认",
                         "className": "btn btn-success",
                         "callback":function(){
                             $.ajax({
-                                url:"../flux/saveFluxList",
+                                url:"../talk/addTalk",
                                 type:"post",
-                                data:$("#saveFluxForm").serialize(),
+                                data:$("#saveTalkForm").serialize(),
                                 success:function(){
                                     $('#myTable').bootstrapTable("refresh");
                                 }
@@ -168,14 +153,14 @@
             });
         }
 
-        function delFlux(){
+        function delComment(){
             var arr = $('#myTable').bootstrapTable("getSelections");
             var id= "";
             for (var i = 0;i<arr.length;i++){
-                id+=id.length==0?arr[i].id:","+arr[i].id
+                id+=id.length==0?arr[i].talkid:","+arr[i].talkid
             }
             $.ajax({
-                url:"../flux/delFlux",
+                url:"../talk/delTalk",
                 type:"post",
                 data:{id:id},
                 success:function(){
@@ -197,7 +182,8 @@
             return res;
         }
 
-        
+
+
         //加载日期组件
         $('.date').datetimepicker({
             language: 'zh-CN',//显示中文
@@ -208,6 +194,11 @@
             autoclose: true,//选中自动关闭
             todayBtn: true//显示今日按钮
         });
+        function importComment() {
+           var page = $('#myTable').bootstrapTable('getOptions').pageNumber;
+            var rows = $('#myTable').bootstrapTable('getOptions').pageSize;
+            location.href="../Comment/export?page="+page+"&rows="+rows;
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="com.jk.comment.mapper.CommentMapper" >
+
+      <select id="queryComment" resultType="com.jk.comment.model.Talk">
+          select * from t_talk
+          <where>
+              <if test="talkinfo != null and talkinfo != ''">
+                     and talkinfo like '%${talkinfo}%'
+              </if>
+              <if test="startDate != null and startDate != ''">
+                    and talktime &gt; #{startDate}
+              </if>
+              <if test="endDate != null and endDate != ''">
+                  and talktime &lt; #{endDate}
+              </if>
+          </where>
+      </select>
+    <select id="queryNewTalk" resultType="java.util.Map">
+        SELECT
+        *
+        FROM
+            t_talk t,
+            t_commodity tc,
+            t_commodity_color tcc,
+            t_productcolor tpc
+        WHERE
+            t.talkproductid = tc.productid
+        AND tcc.commodityid = tc.productId
+        AND tcc.productColorid = tpc.productColor_id
+        GROUP BY
+        tc.productId
+    </select>
+    <delete id="delTalk" parameterType="string">
+        delete from t_talk where talkid in (#{id})
+    </delete>
+    <insert id="addTalk">
+        insert  into t_talk(talkinfo,talkproductid,talktime,talktype,talkuserid) values(#{talkinfo},#{talkproductid},#{talktime},#{talktype},#{talkuserid})
+    </insert>
+</mapper>

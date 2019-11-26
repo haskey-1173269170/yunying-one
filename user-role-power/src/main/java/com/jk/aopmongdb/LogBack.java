@@ -2,6 +2,7 @@ package com.jk.aopmongdb;
 
 import org.aspectj.lang.Signature;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -20,6 +21,26 @@ public class LogBack {
     private String rvalue;
     private String exception;
     private String thisDate;
+    @Transient
+    private String startDate;
+    @Transient
+    private String endDate;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
     public String getThisDate() {
         return thisDate;

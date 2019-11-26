@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>请求日志</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <link rel="stylesheet" href="../js/bootstrap-table/bootstrap-table.css">
+    <script src="../js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../js/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+</head>
+<body>
+<form id="saveFluxForm">
+<table class="table">
+    <tr>
+        <th>日志编号</th>
+        <th>日志名称</th>
+        <th>参数</th>
+        <th>返回值</th>
+        <th>异常</th>
+        <th>请求时间</th>
+    </tr>
+    <tr th:each="one:${one}">
+        <td ondblclick="doubleclick(1)">    <span id="spanId1"   th:text="${one.id}"></span>        <input type="hidden"name="id" th:value="${one.id}" th:hidden="true">                            </td>
+        <td ondblclick="doubleclick(2)">    <span id="spanId2"   th:text="${one.method}"></span>    <input type="hidden" name="method" th:value="${one.method}" th:hidden="true">                </td>
+        <td ondblclick="doubleclick(3)">    <span id="spanId3"   th:text="${one.parmes}"></span>    <input type="hidden" name="parmes" th:value="${one.parmes}" th:hidden="true">             </td>
+        <td ondblclick="doubleclick(4)">    <span id="spanId4"   th:text="${one.rvalue}"></span>    <input type="hidden" name="rvalue" th:value="${one.rvalue}" th:hidden="true">               </td>
+        <td ondblclick="doubleclick(5)">    <span id="spanId5"   th:text="${one.exception}"></span> <input type="hidden" name="exception" th:value="${one.exception}" th:hidden="true">      </td>
+        <td ondblclick="doubleclick(6)">    <span id="spanId6"   th:text="${one.thisDate}"></span>  <input type="hidden" name="thisDate" th:value="${one.thisDate}" th:hidden="true">         </td>
+    </tr>
+</table>
+</form>
+<script>
+
+    $(function(){
+
+            $("#spanId").text(new Date($("#spanId").text()).toLocaleString().substr(0,9));
+
+
+    })
+
+ function doubleclick(flag){
+    if (flag==1){
+        alert("id不能修改");
+    }
+    if (flag==2){
+        var li="<input type='text' name=\"method\" value='"+$("#spanId2").text()+"'>";
+        $("#spanId2").html(li);
+    }
+    if (flag==3){
+        var li="<input type='text' name=\"parmes\"   value='"+$("#spanId3").text()+"'>";
+        $("#spanId3").html(li);
+    }
+    if (flag==4){
+        var li="<input type='text'  name=\"rvalue\"  value='"+$("#spanId4").text()+"'>";
+        $("#spanId4").html(li);
+    }
+    if (flag==5){
+        var li="<input type='text'  name=\"exception\" value='"+$("#spanId5").text()+"'>";
+        $("#spanId5").html(li);
+    }
+    if (flag==6){
+        var li="<input type='text' name=\"thisDate\" value='"+$("#spanId6").text()+"'>";
+        $("#spanId6").html(li);
+    }
+
+ }
+</script>
+</body>
+</html>
