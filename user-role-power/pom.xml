@@ -117,7 +117,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>3.10-beta2</version>
+            <version>5.4.0</version>
         </dependency>
         <!-- 支持Word文档的操作 -->
         <dependency>
